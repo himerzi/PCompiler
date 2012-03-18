@@ -1,12 +1,12 @@
 package ast.statements;
 
-import ast.Body;
+import ast.Block;
 import ast.Visitor;
 import ast.expressions.ExprNode;
 
 public class IfStmt extends StmtNode{
-	Body els = null;
-	public IfStmt(ExprNode l, Body r, Body els){
+	Block els = null;
+	public IfStmt(ExprNode l, Block r, Block els){
 		left = l;right =r;
 		this.els = els;
 	}
