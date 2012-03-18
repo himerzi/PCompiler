@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PCompiler" default="initLex" basedir=".">
+	<description>
+    	A build file for Shahriar Tajbakhsh and Michael Detmold's P Programming Language Compiler Project.
+	</description>
+	
+	<!-- set global properties for this build -->
+	<property name="compiler"  location="src/compiler"/>
+	<property name="rawfiles"  location="rawfiles"/>
+
+	<target name="initLex" description="Generate lexer java file from lex file and place it under src/compiler">
+		<java classname="JLex.Main">
+			<arg value="${rawfiles}/PLexer.lex"/>
+			<classpath>
+				<pathelement location="${basedir}"/>
+				<pathelement path="${java.class.path}"/>
+			</classpath>
+		</java>
+		<move file="${rawfiles}/PLexer.lex.java" todir="${compiler}"/>
+	</target>
+</project>
+
+
+
+  
