@@ -1,0 +1,319 @@
+import java_cup.runtime.*;
+import PSymbol.*;
+import ast.*;
+import ast.statements.*;
+import ast.expressions.*;
+import ast.declarations.*;
+
+init with {:
+	System.out.println("\n------------------ P Parser Error List  ------------------");
+:};
+
+action code {:
+	// Error messages
+	public static final String LPAREN_MISMATCH =  "missing/cannot match \'(\' (open parenthesis).";
+	public static final String RPAREN_MISMATCH = "missing/cannot match \')\' (close parenthesis).";
+	public static final String RCURL_MISMATCH = "missing/connot match \'}\' (close curly brace).";
+	public static final String RBRAC_MISMATCH = "missing/connot match \'}\' (close curly brace).";
+	public static final String COLON_MISSING = "missing/cannot recognise \':\' (colon).";
+	public static final String SEMI_MISSING = "missing/cannot recognise \';\' (semicolon).";
+	public static final String FDEF_NAME_NOT_FOUND = "missing/cannot recognise function name.";
+	public static final String TDEF_NAME_NOT_FOUND = "missing/cannot recognise data type name.";
+	public static final String RETURN_MISSING = "missing/cannot recognise return statement.";
+	public static final String ASSIGNMENT_UNKNOWN = "assignment not recognised.";
+	public static final String FUNCTION_CALL_UNKNOWN = "function call not recognised.";
+	public static final String CONTROL_FLOW_UNKNOWN = "control flow statement not recognised.";
+	public static final String EQ_MISSING = "missing/cannot recognise \'+\' (assignment operator).";
+	public static final String ELSE_MISSING = "missing/cannot recognise \'else\' in if statement.";
+	public static final String DO_MISSING = "missing/cannot recognise \'do\' in while statement.";
+	public static final String UNTIL_MISSING = "missing/cannot recognise \'until\' in repeat statement.";
+	public static final String DECL_UNKNOWN = "declaration section not fully recognised.";
+	// public static final String IF_UNKNOWN = "if statement not recognised.";
+	// public static final String WHILE_UNKNOWN = "while statement not recognised.";
+	// public static final String REPEAT_UNKNOWN = "repeat statement not recognised.";
+	public static final String COMMA_MISMATCH = "missing/cannot recognise \',\' (comma).";
+	public static final String EXPR_UNKNOWN = "expression not recognised.";
+:}
+
+parser code {:
+	private int syntaxErrorCount = 0;
+	
+	public void parseSuccessReport(boolean isSuccess){
+		if(syntaxErrorCount == 0) System.out.println("\n " + "- No syntax errors found.");
+		if(LexicalError.getLexicalErrorCount() == 0) System.out.println("\n " + "- No lexical errors found.");
+		if(isSuccess){
+			System.out.println("\n\n----------------- P Parser Short Summary -----------------\n");
+			System.out.println(" " + "Parsing completed successfully with:");
+		} else {
+			System.out.println("\n\n----------------- P Parser Short Summary -----------------\n");
+			System.out.println(" " + "Parser failed to complete successfully with:");
+		}
+		System.out.println("     " + syntaxErrorCount + " syntax error" +
+		 				  (syntaxErrorCount == 1 ? "," : "s,"));
+		System.out.println("     " + LexicalError.getLexicalErrorCount() + " lexical error" +
+		 				  (LexicalError.getLexicalErrorCount() == 1 ? "." : "s."));
+		System.out.println("\n----------------------------------------------------------");
+	}
+	
+	private String createSyntaxErrorDescription(PSymbol error_token){
+		int lineNumber = error_token.getLine();
+		int columnNumber = PCompiler.getColumn(error_token.getCol()) - 1;
+		String lineString = PCompiler.getLine(lineNumber - 1);
+		
+		String descriptionText = "\n " + "- Syntax error near token \'" + error_token.value + "\'" + " on line " +
+								 lineNumber + ", column " + columnNumber + " found:\n\n";
+		String descriptionLocation = "     ";
+		descriptionLocation += "Line " + lineNumber + ": ";
+		int tempLength = descriptionLocation.length();
+		descriptionLocation += lineString + "\n";
+		// Prints caret
+		for(int i = 0; i < columnNumber + tempLength; i++){
+			descriptionLocation += " ";
+		}
+		descriptionLocation += "^\n";
+		//
+		String descriptionCause = "     Possible cause: ";
+		return descriptionText + descriptionLocation + descriptionCause;
+	}
+	
+	public void syntax_error(Symbol cur_token){
+		syntaxErrorCount++;
+		if(cur_token != null){
+			PSymbol error_token = (PSymbol)cur_token;
+			report_error(createSyntaxErrorDescription(error_token));
+		} else {
+			System.out.println("fdgsdfg");
+		}
+	}	
+	
+	public void printErrorDescription(String message){
+		System.out.println(message);
+	}
+	
+	public void report_error(String message){
+		System.out.print(message);
+	}
+	
+	public void unrecovered_syntax_error(Symbol cur_token){
+		parseSuccessReport(false);
+	}
+:}
+
+terminal NOT, OR, AND;
+terminal PLUS, TIMES, MINUS, DIVIDE, POWER;
+terminal LESS, LESSEQ, GREATER, GREATEREQ, EQQ, NOTEQQ;
+terminal CONCAT, IN, NOTIN;
+terminal LCURL, RCURL, LPAREN, RPAREN, LBRAC, RBRAC, EQ, COLON, SEMI, COMMA, DOT;
+terminal String TYPE;
+terminal VOID, STR, LTUPLE, RTUPLE;
+terminal IF, ELSE, WHILE, DO, REPEAT, UNTIL, RETURN, TDEF, FDEF;
+terminal String ID;
+terminal Boolean BOOL;
+terminal Integer INT;
+terminal Float FLOAT;
+terminal Character CHAR;
+
+non terminal ArgList comma_separated_params;
+non terminal ExprCSV comma_separated_values;
+non terminal p, var, error_recovery_token, comma_separated_params_tail, data_type_instantiation, variable_decl_in_body, variable_decl_in_body_list;
+non terminal Type declared_type;
+non terminal Id identifier;
+non terminal DeclNode variable_decl, function_decl, data_type_decl;
+non terminal DeclList declaration;
+non terminal actual_type, primitive_type, number_type, integral_type, floating_point_type, sequence_type;
+non terminal FieldAccess data_type_value_call;
+non terminal ArrayLiteral list_element_call;
+non terminal call, function_call_for_expr, function_call_for_statement;
+non terminal ExprNode expr;
+non terminal Block block;
+non terminal Body body;
+non terminal return;
+non terminal list, tuple, comma_separated_values_tail;
+non terminal statement, assignment, function_call, control_flow, if, while, repeat;
+
+precedence left DOT;
+precedence left IN, NOTIN, CONCAT;
+precedence right EQ;
+precedence left OR;
+precedence left AND;
+precedence nonassoc EQQ, NOTEQQ, LESS, LESSEQ, GREATER, GREATEREQ;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence right POWER;
+precedence left NOT;
+
+start with p;
+p ::=  declaration:l block:r {: RESULT = new Root(l, r); parser.parseSuccessReport(true); :}
+	// error recovery:
+	| declaration error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.DECL_UNKNOWN); :}
+	;
+
+identifier ::= ID:id	{: RESULT = new Id(id); System.out.println("declared_type ID matched: " + id); :};
+
+declaration ::= declaration:r variable_decl:l		{: RESULT = new DeclList(l, r); :}
+	| declaration:r function_decl:l					{: RESULT = new DeclList(l, r); :}
+	| declaration:r data_type_decl:l				{: RESULT = new DeclList(l, r); :}
+	| /* epsilon */
+	;
+	
+// Variable declaration in declaration part
+variable_decl ::= identifier:id COLON declared_type:type SEMI	{: RESULT = new VarDeclSimple(id, type); System.out.println("variable_decl matched: " + RESULT);:}
+	| identifier:id COLON declared_type:type EQ expr:e SEMI		{: RESULT = new VarDeclComplex(new VarDeclSimple(id, type) , e); :}
+	// error recovery:
+	| identifier error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.COLON_MISSING); :}
+	| identifier COLON declared_type error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.SEMI_MISSING); :}
+	| identifier COLON error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.SEMI_MISSING); :}
+	| identifier COLON declared_type EQ expr error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.SEMI_MISSING); :}
+	;
+//
+
+// Function declaration
+function_decl ::= FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON TYPE block:r		{: RESULT = new FuncDecl(id, l, r); :}
+	| FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON VOID block:r					{: RESULT = new FuncDecl(id, l, r); :}
+	// error recovery:
+	| FDEF error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.FDEF_NAME_NOT_FOUND); :}
+	| FDEF identifier error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}
+	| FDEF identifier LPAREN comma_separated_params error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RPAREN_MISMATCH); :}
+	| FDEF identifier LPAREN comma_separated_params RPAREN error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.COLON_MISSING); :}
+	;
+//
+
+// Type declaration
+data_type_decl ::= TDEF identifier:l COLON comma_separated_params:r SEMI	{: RESULT = new DataTypeDecl(l, r); :}
+	// error recovery:
+	| TDEF error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.TDEF_NAME_NOT_FOUND); :}
+	| TDEF identifier error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.COLON_MISSING); :}
+	| TDEF identifier COLON comma_separated_params error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.SEMI_MISSING); :}
+	;
+//
+
+// Variable declaration in body
+variable_decl_in_body_list ::= variable_decl_in_body_list variable_decl_in_body
+	| /* epsilon */
+	;
+variable_decl_in_body ::=  variable_decl
+	|  data_type_instantiation
+	; 
+data_type_instantiation ::= identifier COLON identifier EQ comma_separated_values SEMI
+	;
+//
+
+comma_separated_params ::= identifier COLON declared_type comma_separated_params_tail
+	| /* epsilon */
+	;
+comma_separated_params_tail ::= COMMA identifier COLON declared_type comma_separated_params_tail
+	| /* epsilon */
+	;
+	
+block ::= LCURL body:l return:r RCURL		{: RESULT = new Block(l, r); :};
+
+return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
+	| RETURN expr:l SEMI	{: RESULT = new ReturnStmt(l); :}
+	| /* epsilon */
+	;
+
+body ::= variable_decl_in_body_list:l statement:r	{: RESULT = new Body(l, r); :};
+
+statement ::= assignment statement
+	| function_call_for_statement statement
+	| control_flow statement
+	| /* epsilon */
+	// error recovery:
+	| assignment error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ASSIGNMENT_UNKNOWN); :}
+	| function_call_for_statement error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.FUNCTION_CALL_UNKNOWN); :}
+	| control_flow error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.CONTROL_FLOW_UNKNOWN); :}
+	;
+	
+assignment ::= identifier:i EQ expr:e SEMI		{: RESULT = new Assign(i, e); :}
+	| list_element_call:i EQ expr:e SEMI		{: RESULT = new Assign(i, e); :}
+	| data_type_value_call:i EQ expr:e SEMI		{: RESULT = new Assign(i, e); :}
+	;
+
+var ::= identifier
+	| call
+	| var DOT identifier
+	| var DOT call
+	;
+
+call ::= function_call_for_expr | data_type_value_call | list_element_call;
+
+function_call ::= identifier:id LPAREN comma_separated_values:args RPAREN	{: RESULT = new FuncStmt(id, args); :};
+function_call_for_statement ::= function_call SEMI;
+function_call_for_expr ::= function_call;
+
+data_type_value_call ::= identifier DOT identifier;
+
+list_element_call ::= identifier LBRAC expr RBRAC;
+	
+control_flow ::= if | while | repeat;
+
+if ::= IF LPAREN expr:l RPAREN block:r ELSE block:els		{: RESULT = new IfStmt(l, r, els); :}
+	// error recovery:
+	| IF error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}
+	| IF LPAREN expr error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RPAREN_MISMATCH); :}
+	| IF LPAREN expr RPAREN block error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ELSE_MISSING); :}
+	;
+while ::= WHILE LPAREN expr:l RPAREN DO block:r		{: RESULT = new WhileStmt(l, r); :}
+	// error recovery:
+	| WHILE error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}
+	| WHILE LPAREN expr error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RPAREN_MISMATCH); :}
+	| WHILE LPAREN expr RPAREN error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.DO_MISSING); :}
+	;
+	
+repeat ::= REPEAT block UNTIL LPAREN expr RPAREN SEMI
+	// error recovery:
+	| REPEAT block error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.UNTIL_MISSING); :}
+	| REPEAT block UNTIL error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}
+	| REPEAT block UNTIL LPAREN expr error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RPAREN_MISMATCH); :}
+	| REPEAT block UNTIL LPAREN expr RPAREN error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.SEMI_MISSING); :}
+	;
+	
+expr ::= actual_type
+	| var
+	| expr:e1 PLUS expr:e2		{: RESULT = new PlusExpr(e1, e2); :}
+	| expr:e1 MINUS expr:e2		{: RESULT = new MinusExpr(e1, e2); :}
+	| expr:e1 TIMES expr:e2		{: RESULT = new TimesExpr(e1, e2); :}
+	| expr:e1 DIVIDE expr:e2	{: RESULT = new DivExpr(e1, e2); :}
+	| expr:e1 POWER expr:e2		{: RESULT = new PowerExpr(e1, e2); :}
+	| expr:e1 EQQ expr:e2		{: RESULT = new EqqExpr(e1, e2); :}
+	| expr:e1 NOTEQQ expr:e2	{: RESULT = new NotEqqExpr(e1, e2); :}
+	| expr:e1 AND expr:e2		{: RESULT = new AndExpr(e1, e2); :}
+	| expr:e1 OR expr:e2		{: RESULT = new OrExpr(e1, e2); :}
+	| expr:e1 LESS expr:e2		{: RESULT = new LessExpr(e1, e2); :}
+	| expr:e1 LESSEQ expr:e2	{: RESULT = new LessEqExpr(e1, e2); :}
+	| expr:e1 GREATER expr:e2	{: RESULT = new GreaterExpr(e1, e2); :}
+	| expr:e1 GREATEREQ expr:e2	{: RESULT = new GreaterEqExpr(e1, e2); :}
+	| expr:e1 IN expr:e2		{: RESULT = new InExpr(e1, e2); :}
+	| expr:e1 NOTIN expr:e2		{: RESULT = new NotInExpr(e1, e2); :}
+	| expr:e1 CONCAT expr:e2	{: RESULT = new ConcatExpr(e1, e2); :}
+	| NOT expr:e				{: RESULT = new NotExpr(e); :}
+	| LPAREN expr:e RPAREN		{: RESULT = e; :}
+	;
+
+declared_type ::= identifier:id
+	| TYPE:type						{: RESULT = new Type(type); System.out.println("declared_type TYPE matched: " + type); :}
+	;
+actual_type ::= primitive_type | sequence_type;
+sequence_type ::= STR:value	{:  RESULT = new Literal(value, PrimitiveTypes.STRING); :}
+	| list
+	| tuple;
+list ::= LBRAC comma_separated_values RBRAC
+	// error recovery:
+	| LBRAC comma_separated_values error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RBRAC_MISMATCH); :}
+	;
+tuple ::= LTUPLE comma_separated_values RTUPLE;
+primitive_type ::= number_type | BOOL;	
+number_type ::= integral_type | floating_point_type;
+integral_type ::= INT:value		{: RESULT = new Literal(value, PrimitiveTypes.INT); :}
+	| CHAR:value				{: RESULT = new Literal(value, PrimitiveTypes.CHAR); :}
+	;
+floating_point_type ::= FLOAT:value		{: RESULT = new Literal(value, PrimitiveTypes.FLOAT); :};
+
+comma_separated_values ::= expr comma_separated_values_tail
+	| /* epsilon */
+	;
+comma_separated_values_tail ::= COMMA expr comma_separated_values_tail
+	| /* epsilon */
+	;
+	
+error_recovery_token ::= RCURL | LCURL | SEMI;
