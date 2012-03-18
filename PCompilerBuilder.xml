@@ -7,10 +7,22 @@
 	<!-- set global properties for this build -->
 	<property name="compiler"  location="src/compiler"/>
 	<property name="rawfiles"  location="rawfiles"/>
+	<property name="lib" location="lib"/>
 
 	<target name="initLex" description="Generate lexer java file from lex file and place it under src/compiler">
 		<java classname="JLex.Main">
 			<arg value="${rawfiles}/PLexer.lex"/>
+			<classpath>
+				<pathelement location="${basedir}"/>
+				<pathelement path="${java.class.path}"/>
+			</classpath>
+		</java>
+		<move file="${rawfiles}/PLexer.lex.java" todir="${compiler}"/>
+	</target>
+	
+	<target name="initCUP" description="">
+		<java classname="java-cup-11a.jar">
+			<arg value="${rawfiles}/PParser.cup"/>
 			<classpath>
 				<pathelement location="${basedir}"/>
 				<pathelement path="${java.class.path}"/>
