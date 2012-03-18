@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PCompiler" default="initLex" basedir=".">
+<project name="PCompiler" default="initCUP" basedir=".">
 	<description>
     	A build file for Shahriar Tajbakhsh and Michael Detmold's P Programming Language Compiler Project.
 	</description>
@@ -20,15 +20,20 @@
 		<move file="${rawfiles}/PLexer.lex.java" todir="${compiler}"/>
 	</target>
 	
-	<target name="initCUP" description="">
-		<java classname="java-cup-11a.jar">
+	<target name="initCUP" description="Generate sym.java and parser.java from cup file and place them under src/compiler" depends="initLex">
+		<java jar="${lib}/java-cup-11a.jar" fork="true">
 			<arg value="${rawfiles}/PParser.cup"/>
 			<classpath>
 				<pathelement location="${basedir}"/>
 				<pathelement path="${java.class.path}"/>
 			</classpath>
 		</java>
-		<move file="${rawfiles}/PLexer.lex.java" todir="${compiler}"/>
+		<move todir="${compiler}">
+			<filelist dir="${basedir}">
+				<file name="parser.java"/>
+				<file name="sym.java"/>
+			</filelist>
+		</move>
 	</target>
 </project>
 
