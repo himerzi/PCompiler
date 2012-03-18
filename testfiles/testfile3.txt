@@ -1,0 +1,28 @@
+
+/* person definition */
+tdef person : name:str, surname:str, age:int;
+
+/* family defintion */
+tdef family : mother:person, father:person, children:list;
+
+{ 
+/*
+here 
+we
+define
+a
+family
+*/
+
+
+  m:person = "aaaaAAA", "bbBB0_i", 40;
+  p:person = "aaaaAAA", "bbBB0_i", 35;
+  c1:person = "aaaaAAA", "bbBB0_i", 1;
+  c2:person = "aaaaAAA", "bbBB0_i", 2;
+  c3:person = "aaaaAAA", "bbBB0_i", 3;
+
+  f: family = m,p,[c1,c2];
+  f.children = f.children + [c3];
+
+
+}

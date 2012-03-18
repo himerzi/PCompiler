@@ -1,0 +1,19 @@
+i still need to learn how to recognize strings and comments seee lexer see a comma list of stringsas in licias example my strings dont recog underscores
+
+does testfile 3 last statement have an error ? + operator on a list
+
+statements ::= statements TERMINAL
+is differnt to:
+statements ::= TERMINAL statements ?
+
+can listst store function calls ? 
+
+how do we recognize user defined types. In instantiation for example.
+can we recognize keyword values in cup, in the grammar, ie avoid having specific terminals for if, while etc.. when they can just be grouped as keywords
+do we define ?
+csv = ({number}|{string}|{identifier})+((,({number}|{string}|{identifier}))*)?
+list = "["{csv}"]"
+do string literals support indexing ?
+how should we define a list ? beware of sublists
+"["[^,]+(,[^,])"]"
+if i'm matching  astring or a character, how should i return it ? with " " ?

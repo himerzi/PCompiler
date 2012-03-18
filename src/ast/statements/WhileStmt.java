@@ -1,0 +1,14 @@
+package ast.statements;
+
+import ast.Body;
+import ast.Visitor;
+import ast.expressions.ExprNode;
+
+public class WhileStmt extends StmtNode{
+	public WhileStmt(ExprNode l, Body r){
+		left = l;right =r;
+	}
+	public Object accept(Visitor v){
+		return v.visit(this);
+	}
+}

@@ -1,0 +1,20 @@
+l1: list = ["a","b"];
+l2: list = [10,20,30];
+ 
+s1:str = "";
+s2:str = "hello";
+
+{
+
+  newlist : list = l1 + l2;
+  anotherlist : list = [s1] + [s2] + newlist;
+
+
+  if (len(newlist) <= len(anotherlist)) {
+     newlist = newlist + anotherlist[0];
+  } else {
+     newlist = newlist - newlist[0];
+  }
+
+
+}
