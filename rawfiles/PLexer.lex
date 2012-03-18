@@ -1,8 +1,6 @@
 package compiler;
 
-import java_cup.runtime.Symbol;
 import PSymbol.*;
-import ast.expressions.*;
 
 class LexicalError{
 	private static int lexicalErrorCount = 0;
