@@ -8,6 +8,8 @@
 	<property name="compiler"  location="src/compiler"/>
 	<property name="rawfiles"  location="rawfiles"/>
 	<property name="lib" location="lib"/>
+	<property name="bin" location="bin"/>
+	<property name="testfiles" location="testfiles"/>
 
 	<target name="initLex" description="Generate lexer java file from lex file and place it under src/compiler">
 		<java classname="JLex.Main">
