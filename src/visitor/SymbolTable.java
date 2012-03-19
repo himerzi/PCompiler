@@ -39,13 +39,19 @@ public class SymbolTable {
 	public class Row{
 		EntryKind kind;
 		String id;		
-		ArrayList<Type> type;
+		private ArrayList<Type> type;
+		//in the case of a variable
+		private Type typesing = null;
 		/**
 		 * @param t the type, or if method, a list of the parameter types in order, followed by any non-letter, followed by return type
 		 */		
 		public Row(String i,EntryKind k, ArrayList<Type> t){
 			kind = k; id = i; type = t;
 		}
+		public Row(String i,EntryKind k, Type t){
+			kind = k; id = i; typesing = t;
+		}
+
 	}
 	public enum EntryKind{
 		METHOD,VAR

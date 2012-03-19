@@ -1,6 +1,7 @@
 package visitor;
 
 import java.util.ArrayList;
+import java.util.WeakHashMap;
 
 import visitor.SymbolTable.EntryKind;
 import ast.Block;
@@ -235,13 +236,12 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public ArrayList<Type> visit(ArgList e) {
+		// we will collect everything into here
 		ArrayList<Type> list = new ArrayList<Type>();
+		//where the type information for every arg is stored
 		VarDeclSimple typeInfo = (VarDeclSimple)e.left;
 		list.add(typeInfo.type);
-		//how do i colllect ze list !?
-		if(e.left == null){
-			
-		}else{
+		if(e.left != null){
 			list.addAll((ArrayList<Type>)e.right.accept(this));
 		}
 		return list;
@@ -267,7 +267,7 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(FuncDecl e) {
-		ArrayList<Type> types = new ArrayList<Type>();
+		//the list of arguments
 		tempList = new ArrayList<Type>();
 		tempList.add(e.type);
 		//where parameter list is declared
