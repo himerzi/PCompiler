@@ -1,5 +1,3 @@
-package compiler;
-
 import java_cup.runtime.*;
 import PSymbol.*;
 import ast.*;
@@ -106,8 +104,8 @@ terminal PLUS, TIMES, MINUS, DIVIDE, POWER;
 terminal LESS, LESSEQ, GREATER, GREATEREQ, EQQ, NOTEQQ;
 terminal CONCAT, IN, NOTIN;
 terminal LCURL, RCURL, LPAREN, RPAREN, LBRAC, RBRAC, EQ, COLON, SEMI, COMMA, DOT;
-terminal String TYPE;
-terminal VOID, STR, LTUPLE, RTUPLE;
+terminal String TYPE, VOID;
+terminal STR, LTUPLE, RTUPLE;
 terminal IF, ELSE, WHILE, DO, REPEAT, UNTIL, RETURN, TDEF, FDEF;
 terminal String ID;
 terminal Boolean BOOL;
@@ -115,9 +113,9 @@ terminal Integer INT;
 terminal Float FLOAT;
 terminal Character CHAR;
 
-non terminal ArgList comma_separated_params;
+non terminal ArgList comma_separated_params, comma_separated_params_tail;
 non terminal ExprCSV comma_separated_values;
-non terminal p, error_recovery_token, comma_separated_params_tail, data_type_instantiation;
+non terminal p, error_recovery_token, data_type_instantiation;
 non terminal Type declared_type;
 non terminal Id identifier;
 non terminal DeclNode variable_decl, function_decl, data_type_decl, variable_decl_in_body;
@@ -170,8 +168,8 @@ variable_decl ::= identifier:id COLON declared_type:type SEMI	{: RESULT = new Va
 //
 
 // Function declaration
-function_decl ::= FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON TYPE block:r		{: RESULT = new FuncDecl(id, l, r); :}
-	| FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON VOID block:r					{: RESULT = new FuncDecl(id, l, r); :}
+function_decl ::= FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON TYPE:type block:r		{: RESULT = new FuncDecl(id, new Type(type), l, r); :}
+	| FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON VOID:type block:r					{: RESULT = new FuncDecl(id, new Type(type), l, r); :}
 	// error recovery:
 	| FDEF error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.FDEF_NAME_NOT_FOUND); :}
 	| FDEF identifier error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}
@@ -200,25 +198,25 @@ data_type_instantiation ::= identifier COLON identifier EQ comma_separated_value
 	;
 //
 
-comma_separated_params ::= identifier COLON declared_type comma_separated_params_tail
+comma_separated_params ::= identifier:id COLON declared_type:type comma_separated_params_tail:r		{: RESULT = new ArgList(new VarDeclSimple(id, type), r); :}
 	| /* epsilon */
 	;
-comma_separated_params_tail ::= COMMA identifier COLON declared_type comma_separated_params_tail
+comma_separated_params_tail ::= COMMA identifier:id COLON declared_type:type comma_separated_params_tail:r	{: RESULT = new ArgList(new VarDeclSimple(id, type), r); :}
 	| /* epsilon */
 	;
 	
-block ::= LCURL body:l return:r RCURL		{: //RESULT = new Block(l, r); :};
+block ::= LCURL body:l return:r RCURL		{: RESULT = new Block(l, r); :};
 
-return ::= RETURN SEMI		{: //RESULT = new ReturnStmt(); :}
+body ::= variable_decl_in_body_list:l statement:r	{: RESULT = new Body(l, r); :};
+
+return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
 	| RETURN expr:l SEMI	{: RESULT = new ReturnStmt(l); :}
 	| /* epsilon */			{: RESULT = new ReturnStmt(); :}
 	;
 
-body ::= variable_decl_in_body_list:l statement:r	{: //RESULT = new Body(l, r); :};
-
-statement ::= assignment statement
-	| function_call_for_statement statement
-	| control_flow statement
+statement ::= assignment:l statement:r				{: RESULT = new StmtList(l, r); :}
+	| function_call_for_statement:l statement:r		{: RESULT = new StmtList(l, r); :}
+	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); System.out.println("big daddy reached.");:}
 	| /* epsilon */
 	// error recovery:
 	| assignment error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ASSIGNMENT_UNKNOWN); :}
@@ -301,20 +299,24 @@ actual_type ::= primitive_type:i		{: RESULT = i; :}
 	| sequence_type:i					{: RESULT = i; :}
 	;
 	
-sequence_type ::= STR:value		{: RESULT = new Literal(value, PrimitiveTypes.STRING); :}
+sequence_type ::= STR:value		{: RESULT = new Literal(value, PrimitiveType.STRING); :}
 	| list
 	| tuple;
-list ::= LBRAC comma_separated_values RBRAC
+list ::= LBRAC comma_separated_values:i RBRAC
 	// error recovery:
 	| LBRAC comma_separated_values error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RBRAC_MISMATCH); :}
 	;
 tuple ::= LTUPLE comma_separated_values RTUPLE;
-primitive_type ::= number_type | BOOL;	
-number_type ::= integral_type | floating_point_type;
-integral_type ::= INT:value		{: RESULT = new Literal(value, PrimitiveTypes.INT); :}
-	| CHAR:value				{: RESULT = new Literal(value, PrimitiveTypes.CHAR); :}
+primitive_type ::= number_type:i		{: RESULT = i; :}
+	| BOOL:i							{: RESULT = Literal(i, PrimitiveType.BOOL):}
+	;	
+number_type ::= integral_type:i		{: RESULT = i; :}
+	| floating_point_type:i			{: RESULT = i; :}
 	;
-floating_point_type ::= FLOAT:value		{: RESULT = new Literal(value, PrimitiveTypes.FLOAT); :};
+integral_type ::= INT:value		{: RESULT = new Literal(value, PrimitiveType.INT); :}
+	| CHAR:value				{: RESULT = new Literal(value, PrimitiveType.CHAR); :}
+	;
+floating_point_type ::= FLOAT:value		{: RESULT = new Literal(value, PrimitiveType.FLOAT); :};
 
 comma_separated_values ::= expr comma_separated_values_tail
 	| /* epsilon */

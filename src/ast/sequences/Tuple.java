@@ -1,7 +1,6 @@
 package ast.sequences;
 
 import ast.expressions.ExprCSV;
-import ast.expressions.ExprNode;
 import visitor.Visitor;
 
 public class Tuple extends SequenceNode {

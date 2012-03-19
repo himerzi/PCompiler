@@ -7,7 +7,10 @@ public class Root extends Node {
 	public Root(DeclList l, Body r){
 		left = l; right = r;
 	}
+	
 	@Override
-	public Object accept(Visitor v);
+	public Object accept(Visitor v){
+		return null;
+	};
 
 }
