@@ -10,7 +10,12 @@ public class Root extends Node {
 	
 	@Override
 	public Object accept(Visitor v){
+<<<<<<< HEAD
+		return null;
+	};
+=======
 		return v.visit(this);
 	}
+>>>>>>> fd719964962449f7bc57b4d5a829cb54ef439b51
 
 }

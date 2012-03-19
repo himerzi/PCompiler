@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import ast.Type;
+import ast.declarations.VarDeclSimple;
 
 public class SymbolTable {
 	SymbolTable parent;
@@ -15,7 +16,7 @@ public class SymbolTable {
 	public SymbolTable(){
 		table = new Hashtable<String, Row>();
 		}
-	public void put(String key, String i, EntryKind k, ArrayList<Type> t){
+	public void put(String key, String i, EntryKind k, ArrayList<VarDeclSimple> t){
 		table.put(key, new Row(i, k, t));
 	}
 	public Row get(String key) {
@@ -39,12 +40,12 @@ public class SymbolTable {
 	public class Row{
 		EntryKind kind;
 		String id;		
-		private ArrayList<Type> type;
+		private ArrayList<VarDeclSimple> type;
 		//in the case of a variable
 		/**
 		 * @param t the type, or if method, a list of the parameter types in order, followed by any non-letter, followed by return type
 		 */		
-		public Row(String i,EntryKind k, ArrayList<Type> t){
+		public Row(String i,EntryKind k, ArrayList<VarDeclSimple> t){
 			kind = k; id = i; type = t;
 		}
 

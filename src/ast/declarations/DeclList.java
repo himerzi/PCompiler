@@ -3,7 +3,7 @@ package ast.declarations;
 import visitor.Visitor;
 
 public class DeclList extends DeclNode {
-	public DeclList(DeclNode l, DeclNode r){
+	public DeclList(DeclNode l, DeclList r){
 		left = l; right = r;
 	}
 	@Override
