@@ -1,5 +1,3 @@
-package compiler;
-
 import java_cup.runtime.*;
 import PSymbol.*;
 import ast.*;
@@ -209,16 +207,28 @@ comma_separated_params_tail ::= COMMA identifier COLON declared_type comma_separ
 	
 block ::= LCURL body:l return:r RCURL		{: //RESULT = new Block(l, r); :};
 
+<<<<<<< HEAD
+body ::= variable_decl_in_body_list:l statement:r	{: RESULT = new Body(l, r); :};
+
+return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
+=======
 return ::= RETURN SEMI		{: //RESULT = new ReturnStmt(); :}
+>>>>>>> 3b60c028c99f867fcd73c9f3442ce89b8e4a8397
 	| RETURN expr:l SEMI	{: RESULT = new ReturnStmt(l); :}
 	| /* epsilon */			{: RESULT = new ReturnStmt(); :}
 	;
 
+<<<<<<< HEAD
+statement ::= assignment:l statement:r				{: RESULT = new StmtList(l, r); :}
+	| function_call_for_statement:l statement:r		{: RESULT = new StmtList(l, r); :}
+	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); System.out.println("big daddy reached.");:}
+=======
 body ::= variable_decl_in_body_list:l statement:r	{: //RESULT = new Body(l, r); :};
 
 statement ::= assignment statement
 	| function_call_for_statement statement
 	| control_flow statement
+>>>>>>> 3b60c028c99f867fcd73c9f3442ce89b8e4a8397
 	| /* epsilon */
 	// error recovery:
 	| assignment error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ASSIGNMENT_UNKNOWN); :}
