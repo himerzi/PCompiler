@@ -1,5 +1,6 @@
 package ast;
 
+import visitor.Visitor;
 import ast.declarations.DeclList;
 
 public class Root extends Node {

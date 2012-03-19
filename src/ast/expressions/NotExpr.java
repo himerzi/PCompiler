@@ -1,7 +1,7 @@
 
 package ast.expressions; 
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class NotExpr extends ExprNode {
 	public NotExpr(ExprNode l) { left = l; }

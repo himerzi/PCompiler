@@ -1,6 +1,6 @@
 package ast.expressions;
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class FuncExpr extends ExprNode {
 	//store csv

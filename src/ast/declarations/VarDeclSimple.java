@@ -1,7 +1,7 @@
 package ast.declarations;
 
+import visitor.Visitor;
 import ast.Type;
-import ast.Visitor;
 import ast.expressions.Id;
 /*
  * variable_decl ::= ID COLON declared_type SEMI
@@ -11,7 +11,7 @@ import ast.expressions.Id;
 *	;
  */
 public class VarDeclSimple extends DeclNode {
-	String type;
+	public Type type;
 	public VarDeclSimple(Id id, Type type){
 		left = id; right = type;
 	}

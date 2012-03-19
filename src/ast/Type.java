@@ -1,10 +1,11 @@
 package ast;
 
+import visitor.Visitor;
 import ast.expressions.Id;
 
 
 public class Type extends Node {
-	String type;
+	public String type;
 	public Type(String type){
 		this.type = type;
 	}
