@@ -3,6 +3,8 @@ package visitor;
 import java.util.ArrayList;
 import java.util.WeakHashMap;
 
+import java_cup.runtime.lr_parser;
+
 import visitor.SymbolTable.EntryKind;
 import ast.Block;
 import ast.Body;
@@ -11,6 +13,7 @@ import ast.Type;
 import ast.declarations.ArgList;
 import ast.declarations.DataTypeDecl;
 import ast.declarations.DeclList;
+import ast.declarations.DeclNode;
 import ast.declarations.FuncDecl;
 import ast.declarations.VarDeclComplex;
 import ast.declarations.VarDeclSimple;
@@ -34,6 +37,9 @@ import ast.expressions.OrExpr;
 import ast.expressions.PlusExpr;
 import ast.expressions.PowerExpr;
 import ast.expressions.TimesExpr;
+import ast.sequences.List;
+import ast.sequences.Str;
+import ast.sequences.Tuple;
 import ast.statements.Assign;
 import ast.statements.IfStmt;
 import ast.statements.RepeatStmt;
@@ -44,12 +50,15 @@ import ast.statements.WhileStmt;
 
 public class ScopeVisitor implements Visitor {
 	SymbolTable table;
-	ArrayList<Type> tempList;
 	public ScopeVisitor(){
 		table = new SymbolTable();
 	}
 	@Override
 	public Boolean visit(Body e) {
+		// a decllist
+		e.left.accept(this);
+		//a statment list
+		e.right.accept(this);
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,12 +71,24 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(Block e) {
+		//a body
+		e.left.accept(this);
+		// a return statement
+		e.right.accept(this);
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(Root e) {
+		//(DeclList l, Body r){
+		try {
+			e.left.accept(this);
+		} catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("root has empty decllist");
+		}
+		e.right.accept(this);
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -241,7 +262,7 @@ public class ScopeVisitor implements Visitor {
 		//where the type information for every arg is stored
 		VarDeclSimple typeInfo = (VarDeclSimple)e.left;
 		list.add(typeInfo.type);
-		if(e.left != null){
+		if(e.right != null){
 			list.addAll((ArrayList<Type>)e.right.accept(this));
 		}
 		return list;
@@ -249,36 +270,82 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(DeclList e) {
+		// DeclNode l, DeclList r
+		try{
+			e.left.accept(this);
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+			System.out.println("i've reached a leaf on declList");
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(VarDeclSimple e) {
+		//Id id, Type type
+		Id id = (Id)e.left;
+		ArrayList<VarDeclSimple> temp = new ArrayList<VarDeclSimple>();
+		temp.add(e);
+		table.put(id.id, id.id, EntryKind.VAR, temp);
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(VarDeclComplex e) {
-		// TODO Auto-generated method stub
+		// (VarDeclSimple l, ExprNode r)
+		e.left.accept(this);
 		return null;
 	}
 
 	@Override
 	public Boolean visit(FuncDecl e) {
 		//the list of arguments
-		tempList = new ArrayList<Type>();
-		tempList.add(e.type);
-		//where parameter list is declared
-		tempList.addAll((ArrayList<Type>)e.left.accept(this));
-		table.put(e.id.id, e.id.id, EntryKind.METHOD,tempList);
-		//begin new scope
-		return null;
+		ArrayList<VarDeclSimple>tempList = new ArrayList<VarDeclSimple>();
+		//the first item of the list will always be the return type
+		tempList.add(new VarDeclSimple(null, e.type));
+		try {
+			//where parameter list is declared
+			tempList.addAll((ArrayList<VarDeclSimple>)e.left.accept(this));
+			table.put(e.id.id, e.id.id, EntryKind.METHOD,tempList);
+			//begin new inner scope for method
+			table = table.beginScope();
+			//add argument list to scope of method body
+			for(int i=1; i< tempList.size();i++){
+				ArrayList<VarDeclSimple> temp = new ArrayList<VarDeclSimple>();
+				VarDeclSimple entry = (VarDeclSimple)tempList.get(i);
+				Id entryId = (Id)entry.left;
+				temp.add(entry);
+				table.put(entryId.id, entryId.id, EntryKind.VAR, temp);
+			}
+			// visit the block
+			e.right.accept(this);
+		} catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("leaf on funcdecl");
+		}
+		table = table.endScope();
+		return true;
 	}
 
 	@Override
 	public Boolean visit(DataTypeDecl e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object visit(List e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object visit(Str e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object visit(Tuple e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

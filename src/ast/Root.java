@@ -8,6 +8,8 @@ public class Root extends Node {
 		left = l; right = r;
 	}
 	@Override
-	public Object accept(Visitor v);
+	public Object accept(Visitor v){
+		return v.visit(this);
+	}
 
 }

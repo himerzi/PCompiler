@@ -7,6 +7,6 @@ package ast;
  * @author md
  *
  */
-public enum PrimitiveTypes {
+public enum PrimitiveType {
 	BOOL, INT, CHAR, STRING, FLOAT, LIST, TUPLE
 }

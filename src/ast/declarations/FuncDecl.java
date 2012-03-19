@@ -1,7 +1,7 @@
 package ast.declarations;
 
 import visitor.Visitor;
-import ast.Body;
+import ast.Block;
 import ast.Type;
 import ast.expressions.Id;
 

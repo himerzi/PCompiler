@@ -1,12 +1,12 @@
 package ast.expressions;
 
 import visitor.Visitor;
-import ast.PrimitiveTypes;
+import ast.PrimitiveType;
 
 public class Literal extends ExprNode {
 	Object value;
-	PrimitiveTypes type;
-	public Literal(Object value, PrimitiveTypes type){
+	PrimitiveType type;
+	public Literal(Object value, PrimitiveType type){
 		this.value = value; this.type = type;
 	}
 	@Override
