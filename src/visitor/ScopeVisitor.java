@@ -84,9 +84,11 @@ public class ScopeVisitor implements Visitor {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * @return returns the entire symbol table for the program
+	 */
 	@Override
-	public Boolean visit(Root e) {
+	public SymbolTable visit(Root e) {
 		//(DeclList l, Body r){
 		try {
 			e.left.accept(this);
@@ -96,7 +98,7 @@ public class ScopeVisitor implements Visitor {
 		}
 		e.right.accept(this);
 		// TODO Auto-generated method stub
-		return null;
+		return table;
 	}
 
 	@Override

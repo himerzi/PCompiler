@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
 import visitor.ScopeVisitor;
+import visitor.SymbolTable;
 
 import ast.Root;
 
@@ -23,7 +24,7 @@ public class PCompiler {
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
 		ScopeVisitor sv = new ScopeVisitor();
-		root.accept(sv);
+		SymbolTable totalTable = (SymbolTable)root.accept(sv);
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");
