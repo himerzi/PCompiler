@@ -3,14 +3,16 @@ package compiler;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
+import visitor.ScopeVisitor;
+
 import ast.Root;
 
 import java_cup.runtime.Symbol;
 
 public class PCompiler {
 
-  private static final String input = getInputStream();
-  //private static final String input = "k";
+  //private static final String input = getInputStream();
+  private static final String input = "s1 : int;fdef sum(i:float, j:float) : float {}{}" ;
 
   public static void main(String args[]){
   	System.out.print("im not running");
@@ -20,7 +22,10 @@ public class PCompiler {
 	try{
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
+		ScopeVisitor sv = new ScopeVisitor();
+		root.accept(sv);
 	} catch(Exception e){
+		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");
 		myParser.parseSuccessReport(false);
 	}

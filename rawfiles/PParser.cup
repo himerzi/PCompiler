@@ -1,3 +1,4 @@
+package compiler;
 import java_cup.runtime.*;
 import PSymbol.*;
 import ast.*;

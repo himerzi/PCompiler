@@ -55,10 +55,16 @@ public class ScopeVisitor implements Visitor {
 	}
 	@Override
 	public Boolean visit(Body e) {
-		// a decllist
-		e.left.accept(this);
-		//a statment list
-		e.right.accept(this);
+		try {
+			// a decllist
+			e.left.accept(this);
+			//a statment list
+			e.right.accept(this);
+		} catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.out.println("an empty body");
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -256,14 +262,14 @@ public class ScopeVisitor implements Visitor {
 	}
 
 	@Override
-	public ArrayList<Type> visit(ArgList e) {
+	public ArrayList<VarDeclSimple> visit(ArgList e) {
 		// we will collect everything into here
-		ArrayList<Type> list = new ArrayList<Type>();
+		ArrayList<VarDeclSimple> list = new ArrayList<VarDeclSimple>();
 		//where the type information for every arg is stored
 		VarDeclSimple typeInfo = (VarDeclSimple)e.left;
-		list.add(typeInfo.type);
+		list.add(typeInfo);
 		if(e.right != null){
-			list.addAll((ArrayList<Type>)e.right.accept(this));
+			list.addAll((ArrayList<VarDeclSimple>)e.right.accept(this));
 		}
 		return list;
 	}

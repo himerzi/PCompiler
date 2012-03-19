@@ -11,7 +11,6 @@ import ast.expressions.Id;
 *	;
  */
 public class VarDeclSimple extends DeclNode {
-	public Type type;
 	public VarDeclSimple(Id id, Type type){
 		left = id; right = type;
 	}

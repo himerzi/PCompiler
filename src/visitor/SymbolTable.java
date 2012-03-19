@@ -15,6 +15,7 @@ public class SymbolTable {
     
 	public SymbolTable(){
 		table = new Hashtable<String, Row>();
+		children = new ArrayList<SymbolTable>();
 		}
 	public void put(String key, String i, EntryKind k, ArrayList<VarDeclSimple> t){
 		table.put(key, new Row(i, k, t));
