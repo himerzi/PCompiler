@@ -85,7 +85,7 @@ parser code {:
 			PSymbol error_token = (PSymbol)cur_token;
 			report_error(createSyntaxErrorDescription(error_token));
 		} else {
-			System.out.println("fdgsdfg");
+			System.out.println("Unknown error occured.");
 		}
 	}	
 	
@@ -124,10 +124,10 @@ non terminal ExprCSV comma_separated_values, comma_separated_values_tail;
 non terminal IfStmt if;
 non terminal WhileStmt while;
 non terminal RepeatStmt repeat;
-non terminal p, error_recovery_token, data_type_instantiation, list, tuple;
+non terminal p, error_recovery_token, list, tuple;
 non terminal Type declared_type;
 non terminal Id identifier;
-non terminal DeclNode variable_decl, function_decl, data_type_decl, variable_decl_in_body;
+non terminal DeclNode variable_decl, function_decl, data_type_decl, variable_decl_in_body, data_type_instantiation;
 non terminal DeclList declaration, variable_decl_in_body_list;
 non terminal Literal actual_type, primitive_type, number_type, integral_type, floating_point_type, sequence_type;
 non terminal FieldAccess data_type_value_call;
@@ -199,9 +199,9 @@ variable_decl_in_body_list ::= variable_decl_in_body_list:r variable_decl_in_bod
 	| /* epsilon */																		{: RESULT = null; :}
 	;
 variable_decl_in_body ::=  variable_decl:i		{: RESULT = i; :}
-	| data_type_instantiation					{: RESULT = i; :}
+	| data_type_instantiation:i					{: RESULT = i; :}
 	; 
-data_type_instantiation ::= identifier COLON identifier EQ comma_separated_values SEMI
+data_type_instantiation ::= identifier:l1 COLON identifier:type EQ comma_separated_values:r SEMI	{: RESULT = new VarDeclComplex(new VarDeclSimple(l1, new Type(type)), r); :}
 	;
 //
 
@@ -251,7 +251,7 @@ function_call_for_expr ::= identifier:id LPAREN comma_separated_values:args RPAR
 
 function_call_for_statement ::= identifier:id LPAREN comma_separated_values:args RPAREN		{: RESULT = new FuncStmt(id, args); :};
 
-data_type_value_call ::= identifier:l DOT identifier:r;
+data_type_value_call ::= identifier:l DOT identifier:r		{: RESULT = new FieldAccess(l, r); :};
 
 list_element_call ::= identifier:l LBRAC expr:r RBRAC		{: RESULT = new ArrayLiteral(l, r); :};
 	
