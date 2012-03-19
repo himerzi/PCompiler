@@ -4,6 +4,7 @@ import ast.*;
 import ast.statements.*;
 import ast.expressions.*;
 import ast.declarations.*;
+import ast.sequences.*;
 
 init with {:
 	System.out.println("\n------------------ P Parser Error List  ------------------");
@@ -114,8 +115,8 @@ terminal Float FLOAT;
 terminal Character CHAR;
 
 non terminal ArgList comma_separated_params, comma_separated_params_tail;
-non terminal ExprCSV comma_separated_values;
-non terminal p, error_recovery_token, data_type_instantiation;
+non terminal ExprCSV comma_separated_values, comma_separated_values_tail;
+non terminal p, error_recovery_token, data_type_instantiation, list, tuple, if, while, repeat;
 non terminal Type declared_type;
 non terminal Id identifier;
 non terminal DeclNode variable_decl, function_decl, data_type_decl, variable_decl_in_body;
@@ -128,10 +129,8 @@ non terminal Block block;
 non terminal Body body;
 non terminal ReturnStmt return;
 non terminal FieldAccess var;
-non terminal list, tuple, comma_separated_values_tail;
 non terminal StmtList statement;
 non terminal StmtNode assignment, function_call_for_statement, control_flow;
-non terminal if, while, repeat;
 
 precedence left DOT;
 precedence left IN, NOTIN, CONCAT;
@@ -302,13 +301,14 @@ actual_type ::= primitive_type:i		{: RESULT = i; :}
 sequence_type ::= STR:value		{: RESULT = new Literal(value, PrimitiveType.STRING); :}
 	| list
 	| tuple;
-list ::= LBRAC comma_separated_values:i RBRAC
+list ::= LBRAC comma_separated_values:i RBRAC		{: RESULT = new List(i); :}
 	// error recovery:
 	| LBRAC comma_separated_values error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RBRAC_MISMATCH); :}
 	;
-tuple ::= LTUPLE comma_separated_values RTUPLE;
+tuple ::= LTUPLE comma_separated_values:l RTUPLE		{: RESULT = new Tuple(l); :};
+
 primitive_type ::= number_type:i		{: RESULT = i; :}
-	| BOOL:i							{: RESULT = Literal(i, PrimitiveType.BOOL):}
+	| BOOL:value						{: RESULT = new Literal(value, PrimitiveType.BOOL); :}
 	;	
 number_type ::= integral_type:i		{: RESULT = i; :}
 	| floating_point_type:i			{: RESULT = i; :}
