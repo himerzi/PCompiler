@@ -6,6 +6,10 @@ import ast.Root;
 import ast.Type;
 import ast.declarations.*;
 import ast.expressions.*;
+import ast.sequences.List;
+import ast.sequences.SequenceNode;
+import ast.sequences.Str;
+import ast.sequences.Tuple;
 import ast.statements.*;
 
 public interface Visitor {
@@ -49,5 +53,9 @@ public interface Visitor {
 	Object visit(VarDeclComplex e);	
 	Object visit(FuncDecl e);
 	Object visit(DataTypeDecl e);
+	
+	Object visit(List e);
+	Object visit(Str e);
+	Object visit(Tuple e);
 
 }

@@ -171,7 +171,7 @@ variable_decl ::= identifier:id COLON declared_type:type SEMI	{: RESULT = new Va
 
 // Function declaration
 function_decl ::= FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON TYPE block:r		{: RESULT = new FuncDecl(id, l, r); :}
-	| FDEF identifier:id LPAREN comma_separavted_params:l RPAREN COLON VOID block:r					{: RESULT = new FuncDecl(id, l, r); :}
+	| FDEF identifier:id LPAREN comma_separated_params:l RPAREN COLON VOID block:r					{: RESULT = new FuncDecl(id, l, r); :}
 	// error recovery:
 	| FDEF error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.FDEF_NAME_NOT_FOUND); :}
 	| FDEF identifier error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.LPAREN_MISMATCH); :}

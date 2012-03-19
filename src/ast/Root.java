@@ -8,9 +8,6 @@ public class Root extends Node {
 		left = l; right = r;
 	}
 	@Override
-	public Object accept(Visitor v) {
-		// TODO Auto-generated method stub
-		return v.visit(this);
-	}
+	public Object accept(Visitor v);
 
 }
