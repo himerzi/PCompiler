@@ -1,7 +1,7 @@
 package ast.expressions;
 
+import visitor.Visitor;
 import ast.PrimitiveTypes;
-import ast.Visitor;
 
 public class Literal extends ExprNode {
 	Object value;

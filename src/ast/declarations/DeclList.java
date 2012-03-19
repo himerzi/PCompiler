@@ -1,6 +1,6 @@
 package ast.declarations;
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class DeclList extends DeclNode {
 	public DeclList(DeclNode l, DeclNode r){

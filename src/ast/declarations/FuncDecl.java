@@ -1,7 +1,8 @@
 package ast.declarations;
 
+import visitor.Visitor;
 import ast.Body;
-import ast.Visitor;
+import ast.Type;
 import ast.expressions.Id;
 
 /*
@@ -14,9 +15,10 @@ import ast.expressions.Id;
 *	;  
  */
 public class FuncDecl extends DeclNode {
-	Id id;
-	public FuncDecl(Id id, ArgList l, Body r){
-		this.id = id; left = l; right = r;
+	public Id id;
+	public Type type;
+	public FuncDecl(Id id, Type type, ArgList l, Block r){
+		this.id = id; this.type = type; left = l; right = r;
 	}
 	@Override
 	public Object accept(Visitor v) {

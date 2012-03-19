@@ -207,14 +207,14 @@ comma_separated_params_tail ::= COMMA identifier COLON declared_type comma_separ
 	| /* epsilon */
 	;
 	
-block ::= LCURL body:l return:r RCURL		{: RESULT = new Block(l, r); :};
+block ::= LCURL body:l return:r RCURL		{: //RESULT = new Block(l, r); :};
 
-return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
+return ::= RETURN SEMI		{: //RESULT = new ReturnStmt(); :}
 	| RETURN expr:l SEMI	{: RESULT = new ReturnStmt(l); :}
 	| /* epsilon */
 	;
 
-body ::= variable_decl_in_body_list:l statement:r	{: RESULT = new Body(l, r); :};
+body ::= variable_decl_in_body_list:l statement:r	{: //RESULT = new Body(l, r); :};
 
 statement ::= assignment statement
 	| function_call_for_statement statement

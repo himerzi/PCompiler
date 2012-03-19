@@ -3,16 +3,23 @@ package compiler;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
+import ast.Root;
+
+import java_cup.runtime.Symbol;
+
 public class PCompiler {
 
   private static final String input = getInputStream();
+  //private static final String input = "k";
 
-  public static void main(String args[]) throws Exception {
-  	
-	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
+  public static void main(String args[]){
+  	System.out.print("im not running");
+  	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
+  //	Yylex myScanner = new Yylex(System.in);
 	parser myParser = new parser(myScanner);
 	try{
-		myParser.parse();
+		Symbol result= myParser.parse();
+		Root root = (Root)result.value;
 	} catch(Exception e){
 		System.out.println("\n - Error in processing P File.");
 		myParser.parseSuccessReport(false);

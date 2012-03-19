@@ -1,6 +1,6 @@
 package ast.declarations;
 
-import ast.Visitor;
+import visitor.Visitor;
 import ast.expressions.ExprNode;
 /*
  * variable_decl ::= ID COLON declared_type SEMI

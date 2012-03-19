@@ -1,7 +1,7 @@
 
 package ast.expressions; 
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class TimesExpr extends ExprNode {
 	public TimesExpr(ExprNode l, ExprNode r) { left = l ; right = r; }

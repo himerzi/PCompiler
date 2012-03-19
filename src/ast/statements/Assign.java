@@ -1,6 +1,6 @@
 package ast.statements;
 
-import ast.Visitor;
+import visitor.Visitor;
 import ast.expressions.ArrayLiteral;
 import ast.expressions.ExprNode;
 import ast.expressions.FieldAccess;

@@ -1,6 +1,6 @@
 package ast.statements;
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class StmtList extends StmtNode{
 	public StmtList(StmtNode l, StmtNode r){

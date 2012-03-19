@@ -1,7 +1,7 @@
 package ast.statements;
 
+import visitor.Visitor;
 import ast.Block;
-import ast.Visitor;
 import ast.expressions.ExprNode;
 
 public class WhileStmt extends StmtNode{

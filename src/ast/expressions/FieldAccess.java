@@ -1,7 +1,7 @@
 
 package ast.expressions; 
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class FieldAccess extends ExprNode {
 	public FieldAccess(ExprNode l, FieldAccess r) { left = l ; right = r; }

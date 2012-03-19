@@ -1,5 +1,9 @@
-package ast;
+package visitor;
 
+import ast.Block;
+import ast.Body;
+import ast.Root;
+import ast.Type;
 import ast.declarations.*;
 import ast.expressions.*;
 import ast.statements.*;

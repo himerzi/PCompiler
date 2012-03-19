@@ -1,7 +1,7 @@
 
 package ast.expressions; 
 
-import ast.Visitor;
+import visitor.Visitor;
 
 public class OrExpr extends ExprNode {
 	public OrExpr(ExprNode l, ExprNode r) { left = l ; right = r; }

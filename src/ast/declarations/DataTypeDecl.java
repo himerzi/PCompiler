@@ -1,6 +1,6 @@
 package ast.declarations;
 
-import ast.Visitor;
+import visitor.Visitor;
 import ast.expressions.Id;
 
 public class DataTypeDecl extends DeclNode {
