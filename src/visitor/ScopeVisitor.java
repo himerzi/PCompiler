@@ -14,9 +14,11 @@ import ast.declarations.FuncDecl;
 import ast.declarations.VarDeclComplex;
 import ast.declarations.VarDeclSimple;
 import ast.expressions.AndExpr;
+import ast.expressions.ArrayLiteral;
 import ast.expressions.ConcatExpr;
 import ast.expressions.DivExpr;
 import ast.expressions.EqqExpr;
+import ast.expressions.ExprCSV;
 import ast.expressions.ExprNode;
 import ast.expressions.FieldAccess;
 import ast.expressions.FuncExpr;
@@ -26,6 +28,7 @@ import ast.expressions.Id;
 import ast.expressions.InExpr;
 import ast.expressions.LessEqExpr;
 import ast.expressions.LessExpr;
+import ast.expressions.Literal;
 import ast.expressions.MinusExpr;
 import ast.expressions.NotEqqExpr;
 import ast.expressions.NotExpr;
@@ -589,6 +592,35 @@ public class ScopeVisitor implements Visitor {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public Object visit(ArrayLiteral e) {
+		// ArrayLiteral(Id id, ExprNode element)
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		return null;
+	}
+	@Override
+	public Object visit(ExprCSV e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}		
+		return null;
+	}
+	@Override
+	public Object visit(Literal e) {
+		return null;
 	}
 
 

@@ -7,8 +7,6 @@ import ast.Type;
 import ast.declarations.*;
 import ast.expressions.*;
 import ast.sequences.List;
-import ast.sequences.SequenceNode;
-import ast.sequences.Str;
 import ast.sequences.Tuple;
 import ast.statements.*;
 
@@ -38,6 +36,9 @@ public interface Visitor {
 	Object visit(ConcatExpr e);
 	Object visit(NotExpr e);
 	Object visit(FuncExpr e);
+	Object visit(ArrayLiteral e);
+	Object visit(ExprCSV e);
+	Object visit(Literal e);
 
 	Object visit(IfStmt e);
 	Object visit(Assign e);
