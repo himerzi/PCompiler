@@ -71,9 +71,10 @@ public class ScopeVisitor implements Visitor {
 	@Override
 	public Boolean visit(Type e) {
 		//check if this is a primitive type. If not, it is a user defined type that needs to be lookup up in sym table.
+		String typeS = e.type.toUpperCase();
 		boolean primitive = false;
 		for(Enum<PrimitiveType> typ:PrimitiveType.values()){
-			if(e.type.equals(typ)){
+			if(typeS.equals(typ.toString())){
 				primitive = true;
 				break;
 			}
@@ -87,19 +88,19 @@ public class ScopeVisitor implements Visitor {
 	@Override
 	public Boolean visit(Block e) {
 		try {
+			table = table.beginScope();
 			//a body
 			e.left.accept(this);
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		try {
 			// a return statement
 			e.right.accept(this);
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
+		table = table.endScope();
 		// TODO Auto-generated method stub
 		return null;
 	}
