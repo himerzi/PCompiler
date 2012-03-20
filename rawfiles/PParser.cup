@@ -156,9 +156,9 @@ p ::=  declaration:l LCURL body:r RCURL {: RESULT = new Root(l, r); parser.parse
 	| declaration error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.DECL_UNKNOWN); :}
 	;
 
-declaration ::= declaration:r variable_decl:l		{: RESULT = new DeclList(l, r); :}
-	| declaration:r function_decl:l					{: RESULT = new DeclList(l, r); :}
-	| declaration:r data_type_decl:l				{: RESULT = new DeclList(l, r); :}
+declaration ::= variable_decl:l	declaration:r 		{: RESULT = new DeclList(l, r); :}
+	| function_decl:l declaration:r 				{: RESULT = new DeclList(l, r); :}
+	| data_type_decl:l declaration:r 				{: RESULT = new DeclList(l, r); :}
 	| /* epsilon */									{: RESULT = null; :}
 	;
 	
