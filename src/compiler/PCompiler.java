@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " {j:int = 3;i:int = 3+j+j;}" ;
+  private static final String input = " {if (3==2) {   b : int =  3;} else {  /* do something else */} if (3==2) {  b : int =  3;} else {  /* do something else */}}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));

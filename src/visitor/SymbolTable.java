@@ -24,19 +24,19 @@ public class SymbolTable {
 			table.put(key, new Row(i, k, t));
 		}
 	}
-	public SymbolTable enterScope(String key) {
-		for(SymbolTable t: children){
-			if(t.table.containsKey(key)){
-				t.table.get(key);
-			}
-				break;
-		}
-		return children.;
-	}
+//	public SymbolTable enterScope(String key) {
+//		for(SymbolTable t: children){
+//			if(t.table.containsKey(key)){
+//				t.table.get(key);
+//			}
+//				break;
+//		}
+//		return children.;
+//	}
 	public Boolean lookup(String key){
 		return search(key) == null?false:true;
 	}
-	public Row search(String key){
+	private Row search(String key){
 		SymbolTable t = this;
 		Row ans = t.table.get(key);
 		while(t != null && ans == null){
