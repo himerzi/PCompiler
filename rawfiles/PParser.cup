@@ -1,4 +1,5 @@
 package compiler;
+
 import java_cup.runtime.*;
 import PSymbol.*;
 import ast.*;
@@ -135,7 +136,7 @@ non terminal ExprNode expr, call, function_call_for_expr;
 non terminal Block block;
 non terminal Body body;
 non terminal ReturnStmt return;
-non terminal FieldAccess var;
+non terminal ExprNode var;
 non terminal StmtList statement;
 non terminal StmtNode assignment, function_call_for_statement, control_flow;
 
@@ -222,7 +223,7 @@ return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
 
 statement ::= assignment:l statement:r				{: RESULT = new StmtList(l, r); :}
 	| function_call_for_statement:l statement:r		{: RESULT = new StmtList(l, r); :}
-	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); :}
+	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); System.out.println("big daddy reached.");:}
 	| /* epsilon */									{: RESULT = null; :}
 	// error recovery:
 	| assignment error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ASSIGNMENT_UNKNOWN); :}
@@ -235,7 +236,7 @@ assignment ::= identifier:i EQ expr:e SEMI		{: RESULT = new Assign(i, e); :}
 	| var:i EQ expr:e SEMI						{: RESULT = new Assign(i, e); :}
 	;
 
-var ::= identifier:l			{: RESULT = new FieldAccess(l, null); :}
+var ::= identifier:i			{: RESULT = i; :}
 	| call:l					{: RESULT = new FieldAccess(l, null); :}
 	| var:r DOT identifier:l	{: RESULT = new FieldAccess(l, r); :}
 	| var:r DOT call:l			{: RESULT = new FieldAccess(l, r); :}

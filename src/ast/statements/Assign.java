@@ -3,7 +3,6 @@ package ast.statements;
 import visitor.Visitor;
 import ast.expressions.ArrayLiteral;
 import ast.expressions.ExprNode;
-import ast.expressions.FieldAccess;
 import ast.expressions.Id;
 
 public class Assign extends StmtNode {
@@ -14,7 +13,7 @@ public class Assign extends StmtNode {
 	public Assign(ArrayLiteral i, ExprNode e){
 		left = i; right = e;
 	}
-	public Assign(FieldAccess i, ExprNode e){
+	public Assign(ExprNode i, ExprNode e){
 		left = i; right = e;
 	}
 	@Override
