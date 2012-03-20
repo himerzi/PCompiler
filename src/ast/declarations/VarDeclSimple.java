@@ -1,6 +1,7 @@
 package ast.declarations;
 
 import visitor.Visitor;
+import ast.PrimitiveType;
 import ast.Type;
 import ast.expressions.Id;
 /*

@@ -5,7 +5,7 @@ import ast.PrimitiveType;
 
 public class Literal extends ExprNode {
 	Object value;
-	PrimitiveType type;
+	public PrimitiveType type;
 	public Literal(Object value, PrimitiveType type){
 		this.value = value; this.type = type;
 	}

@@ -33,6 +33,14 @@ public class SymbolTable {
 //		}
 //		return children.;
 //	}
+	public String getType(String key){
+		Row row = search(key);
+		if(row==null){
+			return null;
+		}else{
+			return row.type.get(0).right.toString();
+		}
+	}
 	public Boolean lookup(String key){
 		return search(key) == null?false:true;
 	}
@@ -83,7 +91,7 @@ public class SymbolTable {
 		private ArrayList<VarDeclSimple> type;
 		//in the case of a variable
 		/**
-		 * @param t the type, or if method, a list of the parameter types in order, followed by any non-letter, followed by return type
+		 * @param t the type, or if method, a list of the parameter types in order, the return type is the first element
 		 */		
 		public Row(String i,EntryKind k, ArrayList<VarDeclSimple> t){
 			kind = k; id = i; type = t;

@@ -9,7 +9,6 @@ import ast.PrimitiveType;
  * | list_element_call
  */
 public abstract class ExprNode extends Node {
-	public PrimitiveType nodeType = null;
 	
 } 
 

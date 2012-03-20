@@ -12,6 +12,9 @@ public class Type extends Node {
 	public Type(Id id){
 		type = id.id;
 	}
+	public String toString(){
+		return type;
+	}
 	@Override
 	public Object accept(Visitor v) {
 		// TODO Auto-generated method stub

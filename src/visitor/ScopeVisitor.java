@@ -131,6 +131,13 @@ public class ScopeVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		// TODO Auto-generated method stub
+		if (e.left.nodeType.equals("int") && e.right.nodeType.equals("int")){
+			e.nodeType = "int";
+		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
+			e.nodeType = "float";
+		}else{
+			System.out.println("Type error: cannot sum " + e.left.nodeType + " and " + e.right.nodeType );
+		}
 		return null;
 	}
 
@@ -143,6 +150,14 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
+		}
+		
+		if (e.left.nodeType.equals("int") && e.right.nodeType.equals("int")){
+			e.nodeType = "int";
+		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
+			e.nodeType = "float";
+		}else{
+			System.out.println("Type error: cannot multiply " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -158,6 +173,14 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
+		
+		if (e.left.nodeType.equals("int") && e.right.nodeType.equals("int")){
+			e.nodeType = "int";
+		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
+			e.nodeType = "float";
+		}else{
+			System.out.println("Type error: cannot subtract " + e.left.nodeType + " and " + e.right.nodeType );
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -172,7 +195,14 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
+		//we can only divide ints or floats
+		if ((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float"))){
+			e.nodeType = "float";
+		}else{
+			System.out.println("Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
+			//set to prevent a cascade of errors
+			e.nodeType = "float";
+		}
 		return null;
 	}
 
@@ -186,7 +216,15 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
+		if (!e.right.nodeType.equals("int")){
+			System.out.println("Type error: cannot raise to a non-integer power" );
+		}else if(!e.left.nodeType.equals("int")||e.left.nodeType.equals("float")){
+			System.out.println("Type error: cannot apply power to a " + e.left.nodeType );
+		}else{
+			System.out.println("Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
+			//set to prevent a cascade of errors
+			e.nodeType = "float";
+		}
 		return null;
 	}
 
@@ -199,6 +237,13 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
+		}
+		if (((e.left.nodeType.equals("int") || e.left.nodeType.equals("bool")||e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")||e.right.nodeType.equals("bool")
+				))
+				&& e.left.nodeType.equals(e.right.nodeType)){
+			e.nodeType = "bool";
+		}else{
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -214,7 +259,11 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
+		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}
+		e.nodeType = "bool";
+
 		return null;
 	}
 
@@ -228,7 +277,10 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
+		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}
+		e.nodeType = "bool";
 		return null;
 	}
 
@@ -242,7 +294,10 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
+		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}
+		e.nodeType = "bool";		
 		return null;
 	}
 
@@ -256,8 +311,12 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
-		return null;
+		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
+				&& e.left.nodeType.equals(e.right.nodeType)){
+			e.nodeType = "bool";
+		}else{
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}		return null;
 	}
 
 	@Override
@@ -270,8 +329,12 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		// TODO Auto-generated method stub
-		return null;
+		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
+				&& e.left.nodeType.equals(e.right.nodeType)){
+			e.nodeType = "bool";
+		}else{
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}		return null;
 	}
 
 	@Override
@@ -284,12 +347,38 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
+		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
+				&& e.left.nodeType.equals(e.right.nodeType)){
+			e.nodeType = "bool";
+		}else{
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}
 		return null;
 	}
 
 	@Override
+	public Boolean visit(GreaterEqExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
+				&& e.left.nodeType.equals(e.right.nodeType)){
+			e.nodeType = "bool";
+		}else{
+			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+		}
+		return null;
+	}
+	@Override
 	public Boolean visit(Id e) {
-		lookup(e.id);
+		if(lookup(e.id)){
+			e.nodeType = table.getType(e.id);
+		}
 		return null;
 	}
 
@@ -305,20 +394,9 @@ public class ScopeVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		// TODO Auto-generated method stub
+		e.nodeType = e.right.nodeType;
 		return null;
-	}
 
-	@Override
-	public Boolean visit(GreaterEqExpr e) {
-		try{
-			e.left.accept(this);
-		}catch (NullPointerException e1) {
-		}
-		try{
-			e.right.accept(this);
-		}catch (NullPointerException e1) {
-		}
-		return null;
 	}
 
 	@Override
@@ -330,7 +408,15 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
-		}		return null;
+		}
+		//list, str, tuple
+		if(!e.left.nodeType.equals("str")){
+			System.out.println("Type error: in cannot operate on " + e.left.nodeType);
+		}
+		//prevent cascade
+		e.nodeType = "bool";
+
+		return null;
 	}
 
 	@Override
@@ -342,7 +428,13 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
-		}		return null;
+		}		
+		if(!e.left.nodeType.equals("str")){
+			System.out.println("Type error: in cannot operate on " + e.left.nodeType);
+		}
+		//prevent cascade
+		e.nodeType = "bool";
+		return null;
 	}
 
 	@Override
@@ -354,7 +446,15 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
-		}		return null;
+		}	
+		if(!(e.left.nodeType.equals("str")||e.left.nodeType.equals("list")||e.left.nodeType.equals("tuple"))){
+			System.out.println("Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
+		}else if(!(e.right.nodeType.equals("str")||e.right.nodeType.equals("list")||e.right.nodeType.equals("tuple"))){
+			System.out.println("Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
+		}
+		//prevent cascade
+		e.nodeType = "bool";
+		return null;
 	}
 
 	@Override
@@ -363,9 +463,23 @@ public class ScopeVisitor implements Visitor {
 			//unary operator, one child
 			e.left.accept(this);
 		}catch (NullPointerException e1) {
-		}		return null;
+		}		
+		if(!e.left.nodeType.equals("bool")){
+			System.out.println("Type error: cannot apply ! (not) operator to " + e.left.nodeType);
+		}
+		e.nodeType = "bool";
+		return null;
 	}
 
+	@Override
+	public Object visit(FuncExpr e) {
+		String funcId = ((Id)e.left).id;
+		if(lookup(funcId)){
+			e.nodeType = table.getType(funcId);
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public Boolean visit(IfStmt e) {
 		try{
@@ -394,6 +508,10 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
+		if(!e.left.nodeType.equals(e.right.nodeType)){
+			System.out.println("Type error: Cannot assign a " + e.right.nodeType + " to a " + e.left.nodeType);
+		}
+		e.nodeType = e.right.nodeType;
 		return null;
 	}
 
@@ -493,6 +611,9 @@ public class ScopeVisitor implements Visitor {
 		temp.add(e);
 		table.put(id.id, id.id, EntryKind.VAR, temp);
 		// TODO Auto-generated method stub
+		Type t = (Type)e.right;
+		//set for typechecking
+		e.nodeType = t.type;
 		return null;
 	}
 
@@ -507,6 +628,9 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
+		}
+		if(!e.left.nodeType.equals(e.right.nodeType)){
+			System.out.println("Type error: cannot instantiate a " + e.left.nodeType + " to a " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -577,13 +701,6 @@ public class ScopeVisitor implements Visitor {
 		// TODO Auto-generated method stub
 		return true;
 	}
-	@Override
-	public Object visit(FuncExpr e) {
-		String funcId = ((Id)e.left).id;
-		lookup(funcId);
-		// TODO Auto-generated method stub
-		return null;
-	}
 	private boolean lookup(String key){
 
 		if(!table.lookup(key)){
@@ -603,6 +720,11 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
+		//this is the actual name of the array
+		String key = ((Id)e.left).id;
+		if(lookup(key)){
+			e.nodeType = table.getType(key);
+		}
 		return null;
 	}
 	@Override
@@ -619,6 +741,7 @@ public class ScopeVisitor implements Visitor {
 	}
 	@Override
 	public Object visit(Literal e) {
+		e.nodeType = e.type.toString().toLowerCase();
 		return null;
 	}
 
