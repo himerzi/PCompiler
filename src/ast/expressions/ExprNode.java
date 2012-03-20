@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
+import ast.PrimitiveType;
 
 /*
  * need to add 	| actual_type
@@ -8,6 +9,7 @@ import ast.Node;
  * | list_element_call
  */
 public abstract class ExprNode extends Node {
+	public PrimitiveType nodeType = null;
 	
 } 
 

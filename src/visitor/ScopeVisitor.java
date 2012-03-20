@@ -468,12 +468,12 @@ public class ScopeVisitor implements Visitor {
 	public Boolean visit(DeclList e) {
 		// DeclNode l, DeclList r
 		try{
-			e.left.accept(this);
+			e.right.accept(this);
 		}catch (NullPointerException e1) {
 			System.out.println("i've reached a leaf on declList");
 		}
 		try{
-			e.right.accept(this);
+			e.left.accept(this);
 		}catch (NullPointerException e1) {
 			System.out.println("i've reached a leaf on declList");
 		}
