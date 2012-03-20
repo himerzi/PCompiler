@@ -19,7 +19,6 @@ import ast.expressions.ConcatExpr;
 import ast.expressions.DivExpr;
 import ast.expressions.EqqExpr;
 import ast.expressions.ExprCSV;
-import ast.expressions.ExprNode;
 import ast.expressions.FieldAccess;
 import ast.expressions.FuncExpr;
 import ast.expressions.GreaterEqExpr;
@@ -45,7 +44,6 @@ import ast.statements.IfStmt;
 import ast.statements.RepeatStmt;
 import ast.statements.ReturnStmt;
 import ast.statements.StmtList;
-import ast.statements.StmtNode;
 import ast.statements.WhileStmt;
 
 public class ScopeVisitor implements Visitor {

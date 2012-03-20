@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = "fdef pinvert(t:tuple):tuple {      return t2;}{i:int;q:int;q=2+5;i=3+2;}" ;
+  private static final String input = " {j:int = 3;i:int = 3+j+j;}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
