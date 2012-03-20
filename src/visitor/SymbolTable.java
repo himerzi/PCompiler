@@ -20,10 +20,28 @@ public class SymbolTable {
 		children = new ArrayList<SymbolTable>();
 		}
 	public void put(String key, String i, EntryKind k, ArrayList<VarDeclSimple> t){
-		table.put(key, new Row(i, k, t));
+		if(table.containsKey(key)){
+			System.out.println("Scope Error: "+key+" has allready been decalred.");
+		}else{
+			table.put(key, new Row(i, k, t));
+		}
 	}
 	public Row get(String key) {
 		return table.get(key);
+	}
+	public Boolean lookup(String key){
+		return search(key) == null?false:true;
+	}
+	public Row search(String key){
+		SymbolTable t = this;
+		Row ans = t.table.get(key);
+		while(t != null && ans == null){
+			t = t.endScope();
+			if(t!=null){
+				ans = t.table.get(key);
+			}
+		}
+		return ans;
 	}
 	public SymbolTable beginScope() {
 		SymbolTable newTable = new SymbolTable();
@@ -80,6 +98,6 @@ public class SymbolTable {
 
 	}
 	public enum EntryKind{
-		METHOD,VAR
+		METHOD,VAR,TDEF
 	}
 }
