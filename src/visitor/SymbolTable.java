@@ -11,8 +11,6 @@ import ast.expressions.Id;
 public class SymbolTable {
 	SymbolTable parent;
 	ArrayList<SymbolTable> children;
-	//SymbolTable rootTable = new SymbolTable();
-    // necessary ?SymbolTable parentTable = new SymbolTable();
     java.util.Hashtable<String, Row> table;
     
 	public SymbolTable(){
@@ -26,8 +24,14 @@ public class SymbolTable {
 			table.put(key, new Row(i, k, t));
 		}
 	}
-	public Row get(String key) {
-		return table.get(key);
+	public SymbolTable enterScope(String key) {
+		for(SymbolTable t: children){
+			if(t.table.containsKey(key)){
+				t.table.get(key);
+			}
+				break;
+		}
+		return children.;
 	}
 	public Boolean lookup(String key){
 		return search(key) == null?false:true;
