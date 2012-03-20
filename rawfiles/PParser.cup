@@ -237,7 +237,7 @@ assignment ::= identifier:i EQ expr:e SEMI		{: RESULT = new Assign(i, e); :}
 	;
 
 var ::= identifier:i			{: RESULT = i; :}
-	| call:l					{: RESULT = new FieldAccess(l, null); :}
+	| call:i					{: RESULT = i; :}
 	| var:r DOT identifier:l	{: RESULT = new FieldAccess(l, r); :}
 	| var:r DOT call:l			{: RESULT = new FieldAccess(l, r); :}
 	;
