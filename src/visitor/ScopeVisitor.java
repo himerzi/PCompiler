@@ -1,19 +1,15 @@
 package visitor;
 
 import java.util.ArrayList;
-import java.util.WeakHashMap;
-
-import java_cup.runtime.lr_parser;
-
 import visitor.SymbolTable.EntryKind;
 import ast.Block;
 import ast.Body;
+import ast.PrimitiveType;
 import ast.Root;
 import ast.Type;
 import ast.declarations.ArgList;
 import ast.declarations.DataTypeDecl;
 import ast.declarations.DeclList;
-import ast.declarations.DeclNode;
 import ast.declarations.FuncDecl;
 import ast.declarations.VarDeclComplex;
 import ast.declarations.VarDeclSimple;
@@ -23,6 +19,7 @@ import ast.expressions.DivExpr;
 import ast.expressions.EqqExpr;
 import ast.expressions.ExprNode;
 import ast.expressions.FieldAccess;
+import ast.expressions.FuncExpr;
 import ast.expressions.GreaterEqExpr;
 import ast.expressions.GreaterExpr;
 import ast.expressions.Id;
@@ -38,9 +35,9 @@ import ast.expressions.PlusExpr;
 import ast.expressions.PowerExpr;
 import ast.expressions.TimesExpr;
 import ast.sequences.List;
-import ast.sequences.Str;
 import ast.sequences.Tuple;
 import ast.statements.Assign;
+import ast.statements.FuncStmt;
 import ast.statements.IfStmt;
 import ast.statements.RepeatStmt;
 import ast.statements.ReturnStmt;
@@ -58,29 +55,50 @@ public class ScopeVisitor implements Visitor {
 		try {
 			//a decllist
 			e.left.accept(this);
+		} catch (NullPointerException e1) {
+		}
+		try {
 			//a statment list
 			e.right.accept(this);
 		} catch (NullPointerException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			System.out.println("an empty body");
 		}
+
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(Type e) {
-		// TODO Auto-generated method stub
+		//check if this is a primitive type. If not, it is a user defined type that needs to be lookup up in sym table.
+		boolean primitive = false;
+		for(Enum<PrimitiveType> typ:PrimitiveType.values()){
+			if(e.type.equals(typ)){
+				primitive = true;
+				break;
+			}
+		}
+		if (!primitive){
+			lookup(e.type);
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(Block e) {
-		//a body
-		e.left.accept(this);
-		// a return statement
-		e.right.accept(this);
+		try {
+			//a body
+			e.left.accept(this);
+		} catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			// a return statement
+			e.right.accept(this);
+		} catch (NullPointerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,7 +112,6 @@ public class ScopeVisitor implements Visitor {
 			e.left.accept(this);
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
-			System.out.println("root has empty decllist");
 		}
 		e.right.accept(this);
 		// TODO Auto-generated method stub
@@ -103,163 +120,332 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(PlusExpr e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean visit(ExprNode e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(TimesExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(MinusExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(DivExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(PowerExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(EqqExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(NotEqqExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(AndExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(OrExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(LessExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(LessEqExpr e) {
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(GreaterExpr e) {
-		// TODO Auto-generated method stub
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(Id e) {
-		// TODO Auto-generated method stub
+		lookup(e.id);
 		return null;
 	}
 
 	@Override
 	public Boolean visit(FieldAccess e) {
+		//FieldAccess(ExprNode l, FieldAccess r)
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(GreaterEqExpr e) {
-		// TODO Auto-generated method stub
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(InExpr e) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}		return null;
 	}
 
 	@Override
 	public Boolean visit(NotInExpr e) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}		return null;
 	}
 
 	@Override
 	public Boolean visit(ConcatExpr e) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}		return null;
 	}
 
 	@Override
 	public Boolean visit(NotExpr e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean visit(StmtNode e) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			//unary operator, one child
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}		return null;
 	}
 
 	@Override
 	public Boolean visit(IfStmt e) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}		
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}		
+		try{
+			e.els.accept(this);
+		}catch (NullPointerException e1) {
+		}		return null;
 	}
 
 	@Override
 	public Boolean visit(Assign e) {
-		// TODO Auto-generated method stub
+		try{
+			//id
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			//expr
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(WhileStmt e) {
 		// TODO Auto-generated method stub
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(StmtList e) {
+		try{
+			//stmtnode
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			//stmtnode
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean visit(RepeatStmt e) {
-		// TODO Auto-generated method stub
+		try{
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
 	@Override
 	public Boolean visit(ReturnStmt e) {
-		// TODO Auto-generated method stub
+		try{
+			//exprnode
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+
 		return null;
 	}
 
@@ -281,6 +467,10 @@ public class ScopeVisitor implements Visitor {
 		// DeclNode l, DeclList r
 		try{
 			e.left.accept(this);
+		}catch (NullPointerException e1) {
+			System.out.println("i've reached a leaf on declList");
+		}
+		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 			System.out.println("i've reached a leaf on declList");
@@ -291,6 +481,10 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(VarDeclSimple e) {
+		try{
+			e.right.accept(this);
+		}catch(NullPointerException e1){
+		}
 		//Id id, Type type
 		Id id = (Id)e.left;
 		ArrayList<VarDeclSimple> temp = new ArrayList<VarDeclSimple>();
@@ -303,7 +497,15 @@ public class ScopeVisitor implements Visitor {
 	@Override
 	public Boolean visit(VarDeclComplex e) {
 		// (VarDeclSimple l, ExprNode r)
-		e.left.accept(this);
+		try{
+			//a simple decl
+			e.left.accept(this);
+		}catch (NullPointerException e1) {
+		}
+		try{
+			e.right.accept(this);
+		}catch (NullPointerException e1) {
+		}
 		return null;
 	}
 
@@ -314,7 +516,7 @@ public class ScopeVisitor implements Visitor {
 		//the first item of the list will always be the return type
 		tempList.add(new VarDeclSimple(null, e.type));
 		try {
-			//where parameter list is declared
+			//where argument list is declared
 			tempList.addAll((ArrayList<VarDeclSimple>)e.left.accept(this));
 			table.put(e.id.id, e.id.id, EntryKind.METHOD,tempList);
 			//begin new inner scope for method
@@ -327,35 +529,67 @@ public class ScopeVisitor implements Visitor {
 				temp.add(entry);
 				table.put(entryId.id, entryId.id, EntryKind.VAR, temp);
 			}
-			// visit the block
-			e.right.accept(this);
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
 			System.out.println("leaf on funcdecl");
+		}
+		try {
+			// visit the block
+			e.right.accept(this);
+		} catch (NullPointerException e1) {
 		}
 		table = table.endScope();
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean visit(DataTypeDecl e) {
-		// TODO Auto-generated method stub
+		Id id = (Id)e.left;
+		ArrayList<VarDeclSimple> argList = new ArrayList<VarDeclSimple>();
+		//where argument list is declared
+		argList.addAll((ArrayList<VarDeclSimple>)e.right.accept(this));
+		table.put(id.id, id.id, EntryKind.TDEF,argList);
 		return null;
 	}
 	@Override
 	public Object visit(List e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Object visit(Str e) {
-		// TODO Auto-generated method stub
+		try {
+			e.left.accept(this);
+		} catch (NullPointerException e1) {
+		}
 		return null;
 	}
 	@Override
 	public Object visit(Tuple e) {
+		try {
+			e.left.accept(this);
+		} catch (NullPointerException e1) {
+		}
+		return null;
+	}
+	@Override
+	public Object visit(FuncStmt e) {
+		String funcId = ((Id)e.left).id;
+		lookup(funcId);
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public Object visit(FuncExpr e) {
+		String funcId = ((Id)e.left).id;
+		lookup(funcId);
 		// TODO Auto-generated method stub
 		return null;
 	}
+	private boolean lookup(String key){
+
+		if(!table.lookup(key)){
+			System.out.println("Scope error: "+key + " has not been declared, or is not in scope.");
+			return false;
+		}
+		return true;
+	}
+
 
 }

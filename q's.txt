@@ -1,3 +1,6 @@
+double defs not allowed
+unnecessary field access
+throw errors up !
 i still need to learn how to recognize strings and comments seee lexer see a comma list of stringsas in licias example my strings dont recog underscores
 
 does testfile 3 last statement have an error ? + operator on a list

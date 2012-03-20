@@ -19,7 +19,6 @@ public interface Visitor {
 	Object visit(Root e);
 	
 	Object visit(PlusExpr e);
-	Object visit(ExprNode e);
 	Object visit(TimesExpr e);
 	Object visit(MinusExpr e);
 	Object visit(DivExpr e);
@@ -38,14 +37,15 @@ public interface Visitor {
 	Object visit(NotInExpr e);
 	Object visit(ConcatExpr e);
 	Object visit(NotExpr e);
+	Object visit(FuncExpr e);
 
-	Object visit(StmtNode e);
 	Object visit(IfStmt e);
 	Object visit(Assign e);
 	Object visit(WhileStmt e);
 	Object visit(StmtList e);
 	Object visit(RepeatStmt e);
 	Object visit(ReturnStmt e);
+	Object visit(FuncStmt e);
 	
 	Object visit(ArgList e);
 	Object visit(DeclList e);
@@ -55,7 +55,6 @@ public interface Visitor {
 	Object visit(DataTypeDecl e);
 	
 	Object visit(List e);
-	Object visit(Str e);
 	Object visit(Tuple e);
 
 }

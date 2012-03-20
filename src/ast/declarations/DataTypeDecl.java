@@ -14,7 +14,7 @@ public class DataTypeDecl extends DeclNode {
 	@Override
 	public Object accept(Visitor v) {
 		// TODO Auto-generated method stub
-		return null;
+		return v.visit(this);	
 	}
 
 }
