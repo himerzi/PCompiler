@@ -13,10 +13,9 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = "s1 : int;fdef sum(i:float, j:float) : float {}{}" ;
+  private static final String input = "{s1 : int = sum(10,20);s2 : float = sum(10.0,20.0); if (s1 < s2 || s1 == s2) {b : bool =  s1 + s2 / (s1+s2) >= 30;} else {/* do something else */}}" ;
 
   public static void main(String args[]){
-  	System.out.print("im not running");
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
   //	Yylex myScanner = new Yylex(System.in);
 	parser myParser = new parser(myScanner);
@@ -25,6 +24,7 @@ public class PCompiler {
 		Root root = (Root)result.value;
 		ScopeVisitor sv = new ScopeVisitor();
 		SymbolTable totalTable = (SymbolTable)root.accept(sv);
+		System.out.println(totalTable.toString());
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");

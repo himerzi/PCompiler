@@ -2,9 +2,6 @@ fdef sum(i: int, j:int) : int {
      return i+j;
 }
 
-fdef sum(i:float, j:float) : float {
-     return i+j;
-}
 
 
 {

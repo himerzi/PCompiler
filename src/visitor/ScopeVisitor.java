@@ -56,7 +56,7 @@ public class ScopeVisitor implements Visitor {
 	@Override
 	public Boolean visit(Body e) {
 		try {
-			// a decllist
+			//a decllist
 			e.left.accept(this);
 			//a statment list
 			e.right.accept(this);

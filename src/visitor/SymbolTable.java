@@ -2,9 +2,11 @@ package visitor;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
 
 import ast.Type;
 import ast.declarations.VarDeclSimple;
+import ast.expressions.Id;
 
 public class SymbolTable {
 	SymbolTable parent;
@@ -38,6 +40,21 @@ public class SymbolTable {
 	public void setParent(SymbolTable parent) {
 		this.parent = parent;
 	}
+	public String toString(){
+		String r = "--------Begin Symbol Table------\n";
+		for (Map.Entry<String, Row> entry : table.entrySet()) {
+			r += entry.getValue().toString() + '\n';
+		}
+		r += "--------End Symbol Table------\n";
+		for (SymbolTable t:children) {
+			r += "--------Begin Symbol Table------\n";
+			for (Map.Entry<String, Row> entry : t.table.entrySet()) {
+				r += entry.getValue().toString() + '\n';
+			}
+			r += "--------End Symbol Table------\n";
+		}
+		return r;
+	}
 	public class Row{
 		EntryKind kind;
 		String id;		
@@ -49,7 +66,17 @@ public class SymbolTable {
 		public Row(String i,EntryKind k, ArrayList<VarDeclSimple> t){
 			kind = k; id = i; type = t;
 		}
-
+		public String toString(){
+			String typeinfo = "";
+			String t = "->";
+			for(VarDeclSimple v:type){
+				if(v.left != null){
+					t = ((Id)v.left).id;
+				}
+				typeinfo = t + ":" + ((Type)v.right).type +"," + typeinfo ;
+			}
+			return  kind.toString() + " " + id + " " + typeinfo  ;
+		}
 
 	}
 	public enum EntryKind{
