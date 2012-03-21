@@ -24,15 +24,6 @@ public class SymbolTable {
 			table.put(key, new Row(i, k, t));
 		}
 	}
-//	public SymbolTable enterScope(String key) {
-//		for(SymbolTable t: children){
-//			if(t.table.containsKey(key)){
-//				t.table.get(key);
-//			}
-//				break;
-//		}
-//		return children.;
-//	}
 	public String getType(String key){
 		Row row = search(key);
 		if(row==null){
