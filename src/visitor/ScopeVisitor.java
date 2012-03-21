@@ -86,7 +86,9 @@ public class ScopeVisitor implements Visitor {
 	}
 
 	@Override
-	public Boolean visit(Block e) {
+	//returns the return type of the return expression, which is used to type check against the function declaration
+	public String visit(Block e) {
+		String returnType = null;
 		try {
 			table = table.beginScope();
 			//a body
@@ -96,13 +98,13 @@ public class ScopeVisitor implements Visitor {
 		}
 		try {
 			// a return statement
-			e.right.accept(this);
+			 returnType = (String)e.right.accept(this);
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
 		}
 		table = table.endScope();
 		// TODO Auto-generated method stub
-		return null;
+		return returnType;
 	}
 	/**
 	 * @return returns the entire symbol table for the program
@@ -553,14 +555,14 @@ public class ScopeVisitor implements Visitor {
 	}
 
 	@Override
-	public Boolean visit(ReturnStmt e) {
+	public String visit(ReturnStmt e) {
 		try{
 			//exprnode
 			e.left.accept(this);
 		}catch (NullPointerException e1) {
 		}
 
-		return null;
+		return e.left.nodeType;
 	}
 
 	@Override
@@ -631,6 +633,8 @@ public class ScopeVisitor implements Visitor {
 
 	@Override
 	public Boolean visit(FuncDecl e) {
+		//used to typecheck against the declared return type
+		String returnType = null;
 		//the list of arguments
 		ArrayList<VarDeclSimple>tempList = new ArrayList<VarDeclSimple>();
 		//the first item of the list will always be the return type
@@ -655,10 +659,13 @@ public class ScopeVisitor implements Visitor {
 		}
 		try {
 			// visit the block
-			e.right.accept(this);
+			returnType = (String)e.right.accept(this);
 		} catch (NullPointerException e1) {
 		}
 		table = table.endScope();
+		if(!(returnType.equals(table.getType(e.id.id)))){
+			System.out.println("Type error: function " + e.id.id + " does not return its declared type");
+		}
 		return true;
 	}
 
