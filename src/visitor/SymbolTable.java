@@ -41,6 +41,15 @@ public class SymbolTable {
 			return row.type.get(0).right.toString();
 		}
 	}
+	public ArrayList<String> getArgTypes(String key){
+		ArrayList<String> type = new ArrayList<String>();
+		Row ans = search(key);
+		for(VarDeclSimple t:ans.type){
+			Type ty = (Type)t.right;
+			type.add(ty.type);
+		}
+		return type;
+	}
 	public Boolean lookup(String key){
 		return search(key) == null?false:true;
 	}

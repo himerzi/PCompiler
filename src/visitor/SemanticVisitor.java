@@ -437,10 +437,20 @@ public class SemanticVisitor implements Visitor {
 		String funcId = ((Id)e.left).id;
 		if(lookup(funcId)){
 			e.nodeType = table.getType(funcId);
-			ArrayList<VarDeclSimple>tempList = new ArrayList<VarDeclSimple>();
-			int numArgs = (Integer)e.right.accept(this);
+			ArrayList<String> tempList = ((ArrayList<String>)e.right.accept(this));
+			int numArgs = tempList.size();
 			if(table.numOfArgs(funcId) != numArgs){
 				System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+			}
+			ArrayList<String>compare = table.getArgTypes(funcId);
+			int i = 0;
+			for(String s: compare){
+				
+				if(!s.equals(tempList.get(i))){
+					System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
+					break;
+				}
+				i++;
 			}
 		}
 		// TODO Auto-generated method stub
@@ -680,9 +690,20 @@ public class SemanticVisitor implements Visitor {
 	public Object visit(FuncStmt e) {
 		String funcId = ((Id)e.left).id;
 		lookup(funcId);
-		int numArgs = (Integer)e.right.accept(this);
+		ArrayList<String> tempList = ((ArrayList<String>)e.right.accept(this));
+		int numArgs = tempList.size();
 		if(table.numOfArgs(funcId) != numArgs){
 			System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+		}
+		ArrayList<String>compare = table.getArgTypes(funcId);
+		int i = 0;
+		for(String s: compare){
+			
+			if(!s.equals(tempList.get(i))){
+				System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
+				break;
+			}
+			i++;
 		}
 		// TODO Auto-generated method stub
 		return true;
@@ -714,18 +735,18 @@ public class SemanticVisitor implements Visitor {
 		return null;
 	}
 	@Override
-	public Integer visit(ExprCSV e) {
-		int args = 0;
+	public Object visit(ExprCSV e) {
+		ArrayList<String> t = new ArrayList<String>();
 		try{
 			e.left.accept(this);
-			args++;
+			t.add(e.left.nodeType);
 		}catch (NullPointerException e1) {
 		}
 		try{
-			args += (Integer)e.right.accept(this);
+			t.addAll((ArrayList<String>)e.right.accept(this));
 		}catch (NullPointerException e1) {
 		}		
-		return args;
+		return t;
 	}
 	@Override
 	public Object visit(Literal e) {

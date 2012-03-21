@@ -3,7 +3,7 @@ package compiler;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
-import visitor.ScopeVisitor;
+import visitor.SemanticVisitor;
 import visitor.SymbolTable;
 
 import ast.Root;
@@ -14,10 +14,10 @@ public class PCompiler {
 
   //private static final String input = getInputStream();
 <<<<<<< HEAD
-  private static final String input = " fdef sum(i: int, j:int) : int { return true;}{}" ;
+  private static final String input = " fdef sum(i: int, j:int) : int { return 3;}{i:int = sum(2,1,1)+3;}" ;
 =======
-  private static final String input = " {a:list = [1,2,3,45.6];}" ;
->>>>>>> c3476c4aabc6f958eb55d5b835160bbad78b2dff
+  private static final String input = " fdef sum(i: int, j:int) : int { return 4.5;}{ i:int = sum(true, true);}" ;
+>>>>>>> ca2f9765c5d17edc5cd41134fe4af1803910879e
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
@@ -26,9 +26,12 @@ public class PCompiler {
 	try{
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
+<<<<<<< HEAD
+		SemanticVisitor sv = new SemanticVisitor();
+=======
 		ScopeVisitor sv = new ScopeVisitor();
-		SymbolTable totalTable = (SymbolTable)root.accept(sv);
-		System.out.println(totalTable.toString());
+>>>>>>> ca2f9765c5d17edc5cd41134fe4af1803910879e
+		root.accept(sv);
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");
