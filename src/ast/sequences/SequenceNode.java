@@ -1,8 +1,8 @@
 package ast.sequences;
 
-import ast.Node;
+import ast.expressions.ExprNode;
 
-public abstract class SequenceNode extends Node {
+public abstract class SequenceNode extends ExprNode {
 
 
 }

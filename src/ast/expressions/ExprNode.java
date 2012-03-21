@@ -1,7 +1,6 @@
 package ast.expressions;
 
 import ast.Node;
-import ast.PrimitiveType;
 
 /*
  * need to add 	| actual_type

@@ -123,15 +123,18 @@ non terminal ExprCSV comma_separated_values, comma_separated_values_tail;
 non terminal IfStmt if;
 non terminal WhileStmt while;
 non terminal RepeatStmt repeat;
-non terminal p, error_recovery_token, list, tuple;
+non terminal p, error_recovery_token; 
+non terminal List list;
+non terminal Tuple tuple;
 non terminal Type declared_type;
 non terminal Id identifier;
 non terminal DeclNode variable_decl, function_decl, data_type_decl, variable_decl_in_body, data_type_instantiation;
 non terminal DeclList declaration, variable_decl_in_body_list;
-non terminal Literal actual_type, primitive_type, number_type, integral_type, floating_point_type, sequence_type;
+non terminal Literal primitive_type, number_type, integral_type, floating_point_type;
+non terminal SequenceNode sequence_type;
 non terminal FieldAccess data_type_value_call;
 non terminal ArrayLiteral list_element_call;
-non terminal ExprNode expr, call, function_call_for_expr;
+non terminal ExprNode expr, call, function_call_for_expr, actual_type;
 non terminal Block block;
 non terminal Body body;
 non terminal ReturnStmt return;
@@ -222,7 +225,7 @@ return ::= RETURN SEMI		{: RESULT = new ReturnStmt(); :}
 
 statement ::= assignment:l statement:r				{: RESULT = new StmtList(l, r); :}
 	| function_call_for_statement:l statement:r		{: RESULT = new StmtList(l, r); :}
-	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); System.out.println("big daddy reached.");:}
+	| control_flow:l statement:r					{: RESULT = new StmtList(l, r); :}
 	| /* epsilon */									{: RESULT = null; :}
 	// error recovery:
 	| assignment error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.ASSIGNMENT_UNKNOWN); :}
@@ -309,9 +312,9 @@ actual_type ::= primitive_type:i		{: RESULT = i; :}
 	| sequence_type:i					{: RESULT = i; :}
 	;
 	
-sequence_type ::= STR:value		{: RESULT = new Literal(value, PrimitiveType.STRING); :}
-	| list
-	| tuple;
+sequence_type ::= list:i		{: RESULT = i; :}
+	| tuple:i					{: RESULT = i; :}
+	;
 list ::= LBRAC comma_separated_values:i RBRAC		{: RESULT = new List(i); :}
 	// error recovery:
 	| LBRAC comma_separated_values error error_recovery_token {: parser.printErrorDescription(CUP$parser$actions.RBRAC_MISMATCH); :}
@@ -320,6 +323,7 @@ tuple ::= LTUPLE comma_separated_values:l RTUPLE		{: RESULT = new Tuple(l); :};
 
 primitive_type ::= number_type:i		{: RESULT = i; :}
 	| BOOL:value						{: RESULT = new Literal(value, PrimitiveType.BOOL); :}
+	| STR:value							{: RESULT = new Literal(value, PrimitiveType.STRING); :}
 	;	
 number_type ::= integral_type:i		{: RESULT = i; :}
 	| floating_point_type:i			{: RESULT = i; :}
