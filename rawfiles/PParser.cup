@@ -9,7 +9,7 @@ import ast.declarations.*;
 import ast.sequences.*;
 
 init with {:
-	System.out.println("\n------------------ P Parser Error List  ------------------");
+	System.out.println("\n------------------ P Parser Syntax Analysis Error List  ------------------");
 :};
 
 action code {:
@@ -45,17 +45,16 @@ parser code {:
 		if(syntaxErrorCount == 0) System.out.println("\n " + "- No syntax errors found.");
 		if(LexicalError.getLexicalErrorCount() == 0) System.out.println("\n " + "- No lexical errors found.");
 		if(isSuccess){
-			System.out.println("\n\n----------------- P Parser Short Summary -----------------\n");
+			System.out.println("\n\n----------------- P Parser Syntax Analysis Short Summary -----------------\n");
 			System.out.println(" " + "Parsing completed successfully with:");
 		} else {
-			System.out.println("\n\n----------------- P Parser Short Summary -----------------\n");
+			System.out.println("\n\n----------------- P Parser Syntax Analysis Short Summary -----------------\n");
 			System.out.println(" " + "Parser failed to complete successfully with:");
 		}
 		System.out.println("     " + syntaxErrorCount + " syntax error" +
 		 				  (syntaxErrorCount == 1 ? "," : "s,"));
 		System.out.println("     " + LexicalError.getLexicalErrorCount() + " lexical error" +
 		 				  (LexicalError.getLexicalErrorCount() == 1 ? "." : "s."));
-		System.out.println("\n----------------------------------------------------------");
 	}
 	
 	private String createSyntaxErrorDescription(PSymbol error_token){

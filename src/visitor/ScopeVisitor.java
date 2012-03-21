@@ -1,6 +1,7 @@
 package visitor;
 
 import java.util.ArrayList;
+
 import visitor.SymbolTable.EntryKind;
 import ast.*;
 import ast.statements.*;
@@ -9,9 +10,11 @@ import ast.declarations.*;
 import ast.sequences.*;
 
 public class ScopeVisitor implements Visitor {
+	
 	SymbolTable table;
 	public ScopeVisitor(){
 		table = new SymbolTable();
+		System.out.println("\n---------------- P Parser Semantic Analysis Short Summary ----------------\n");
 	}
 	@Override
 	public Boolean visit(Body e) {
