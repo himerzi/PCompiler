@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " fdef sum(i: int, j:int) : int { return true;}{}" ;
+  private static final String input = " fdef sum(i: int, j:int) : int { return 4.5;}{ i:int = sum(true, true);}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
@@ -23,6 +23,7 @@ public class PCompiler {
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
 		ScopeVisitor sv = new ScopeVisitor();
+		root.accept(sv);
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");
