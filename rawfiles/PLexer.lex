@@ -121,11 +121,3 @@ whitespace = [\ \t\r\n\f]
 <COMMENT>.|{whitespace} {}
 
 <YYINITIAL>. {System.out.println(LexicalError.createLexicalErrorDescription(yytext(), yyline, yychar, "unknown character.")); LexicalError.increaseError();}
-
-
-
-
-
-
-
-
