@@ -50,7 +50,7 @@
   </class>  
   <class id="7" corner="BOTTOM_RIGHT" language="java" name="ast.declarations.ArgList" project="PCompiler" 
     file="/PCompiler/src/ast/declarations/ArgList.java" binary="false">    
-    <position height="-1" width="-1" x="1505" y="403"/>    
+    <position height="-1" width="-1" x="1573" y="96"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -58,7 +58,7 @@
   </class>  
   <class id="8" corner="BOTTOM_RIGHT" language="java" name="ast.declarations.DataTypeDecl" project="PCompiler" 
     file="/PCompiler/src/ast/declarations/DataTypeDecl.java" binary="false">    
-    <position height="-1" width="-1" x="1693" y="404"/>    
+    <position height="-1" width="-1" x="1787" y="295"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -66,7 +66,7 @@
   </class>  
   <class id="9" corner="BOTTOM_RIGHT" language="java" name="ast.declarations.DeclList" project="PCompiler" 
     file="/PCompiler/src/ast/declarations/DeclList.java" binary="false">    
-    <position height="-1" width="-1" x="843" y="395"/>    
+    <position height="-1" width="-1" x="1213" y="161"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -90,7 +90,7 @@
   </class>  
   <class id="12" corner="BOTTOM_RIGHT" language="java" name="ast.declarations.VarDeclComplex" project="PCompiler" 
     file="/PCompiler/src/ast/declarations/VarDeclComplex.java" binary="false">    
-    <position height="-1" width="-1" x="1087" y="400"/>    
+    <position height="-1" width="-1" x="1431" y="107"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -98,7 +98,7 @@
   </class>  
   <class id="13" corner="BOTTOM_RIGHT" language="java" name="ast.declarations.VarDeclSimple" project="PCompiler" 
     file="/PCompiler/src/ast/declarations/VarDeclSimple.java" binary="false">    
-    <position height="-1" width="-1" x="1318" y="401"/>    
+    <position height="-1" width="-1" x="1742" y="106"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -106,7 +106,7 @@
   </class>  
   <class id="14" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.AndExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/AndExpr.java" binary="false">    
-    <position height="-1" width="-1" x="897" y="923"/>    
+    <position height="-1" width="-1" x="1318" y="352"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -122,7 +122,7 @@
   </class>  
   <class id="16" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.ConcatExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/ConcatExpr.java" binary="false">    
-    <position height="-1" width="-1" x="716" y="591"/>    
+    <position height="-1" width="-1" x="1293" y="555"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -138,7 +138,7 @@
   </class>  
   <class id="18" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.EqqExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/EqqExpr.java" binary="false">    
-    <position height="-1" width="-1" x="510" y="809"/>    
+    <position height="-1" width="-1" x="779" y="799"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -178,7 +178,7 @@
   </class>  
   <class id="23" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.GreaterEqExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/GreaterEqExpr.java" binary="false">    
-    <position height="-1" width="-1" x="138" y="900"/>    
+    <position height="-1" width="-1" x="565" y="799"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -194,7 +194,7 @@
   </class>  
   <class id="25" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.Id" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/Id.java" binary="false">    
-    <position height="-1" width="-1" x="895" y="660"/>    
+    <position height="-1" width="-1" x="1343" y="813"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -202,7 +202,7 @@
   </class>  
   <class id="26" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.InExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/InExpr.java" binary="false">    
-    <position height="-1" width="-1" x="991" y="772"/>    
+    <position height="-1" width="-1" x="1212" y="767"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -210,7 +210,7 @@
   </class>  
   <class id="27" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.LessEqExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/LessEqExpr.java" binary="false">    
-    <position height="-1" width="-1" x="583" y="907"/>    
+    <position height="-1" width="-1" x="666" y="886"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -242,7 +242,7 @@
   </class>  
   <class id="31" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.NotEqqExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/NotEqqExpr.java" binary="false">    
-    <position height="-1" width="-1" x="728" y="748"/>    
+    <position height="-1" width="-1" x="893" y="713"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -250,7 +250,7 @@
   </class>  
   <class id="32" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.NotExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/NotExpr.java" binary="false">    
-    <position height="-1" width="-1" x="2155" y="826"/>    
+    <position height="-1" width="-1" x="1689" y="586"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -258,7 +258,7 @@
   </class>  
   <class id="33" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.NotInExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/NotInExpr.java" binary="false">    
-    <position height="82" width="198" x="937" y="845"/>    
+    <position height="-1" width="-1" x="1048" y="903"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -266,7 +266,7 @@
   </class>  
   <class id="34" corner="BOTTOM_RIGHT" language="java" name="ast.expressions.OrExpr" project="PCompiler" 
     file="/PCompiler/src/ast/expressions/OrExpr.java" binary="false">    
-    <position height="-1" width="-1" x="1405" y="926"/>    
+    <position height="-1" width="-1" x="1319" y="438"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
