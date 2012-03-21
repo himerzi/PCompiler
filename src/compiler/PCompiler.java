@@ -12,18 +12,17 @@ import java_cup.runtime.Symbol;
 
 public class PCompiler {
 
-  //private static final String input = getInputStream();
-  private static final String input = " glob:str= \"sd\"; fdef sum(i: int, j:int) : int { i:str = glob; return 3;}{i:int = sum(3,1)+3;}" ;
+  private static final String input = getInputStream();
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
-  //	Yylex myScanner = new Yylex(System.in);
 	parser myParser = new parser(myScanner);
 	try{
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
 		SemanticVisitor sv = new SemanticVisitor();
 		root.accept(sv);
+		System.out.println("--------------------------------------------------------------------------");
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");
