@@ -12,6 +12,7 @@ import ast.sequences.*;
 public class SemanticVisitor implements Visitor {
 	
 	SymbolTable table;
+	int numOfErrors = 0;
 	public SemanticVisitor(){
 		table = new SymbolTable();
 		System.out.println("\n---------------- P Parser Semantic Analysis Short Summary ----------------\n");
@@ -184,11 +185,11 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if (!e.right.nodeType.equals("int")){
-			System.out.println(" - Type error: cannot raise to a non-integer power" );
+			numOfErrors++;System.out.println(" - Type error: cannot raise to a non-integer power" );
 		}else if(!e.left.nodeType.equals("int")||e.left.nodeType.equals("float")){
-			System.out.println(" - Type error: cannot apply power to a " + e.left.nodeType );
+			numOfErrors++;System.out.println(" - Type error: cannot apply power to a " + e.left.nodeType );
 		}else{
-			System.out.println(" - Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
+			numOfErrors++;System.out.println(" - Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
 			//set to prevent a cascade of errors
 			e.nodeType = "float";
 		}
@@ -208,7 +209,7 @@ public class SemanticVisitor implements Visitor {
 		if ((e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
+			numOfErrors++;System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -225,7 +226,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
-			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			numOfErrors++;System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";
 
@@ -243,7 +244,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
-			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			numOfErrors++;System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";
 		return null;
@@ -260,7 +261,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
-			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			numOfErrors++;System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";		
 		return null;
