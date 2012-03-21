@@ -631,9 +631,9 @@ public class SemanticVisitor implements Visitor {
 		tempList.add(new VarDeclSimple(null, e.type));
 		try {
 			//where argument list is declared
+			lookup(e.id.id);
 			tempList.addAll((ArrayList<VarDeclSimple>)e.left.accept(this));
 			table.put(e.id.id, e.id.id, EntryKind.METHOD,tempList);
-			lookup(e.id.id);
 			//begin new inner scope for method
 			table = table.beginScope();
 			//add argument list to scope of method body
