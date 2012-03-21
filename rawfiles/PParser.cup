@@ -322,7 +322,7 @@ tuple ::= LTUPLE comma_separated_values:l RTUPLE		{: RESULT = new Tuple(l); :};
 
 primitive_type ::= number_type:i		{: RESULT = i; :}
 	| BOOL:value						{: RESULT = new Literal(value, PrimitiveType.BOOL); :}
-	| STR:value							{: RESULT = new Literal(value, PrimitiveType.STRING); :}
+	| STR:value							{: RESULT = new Literal(value, PrimitiveType.STR); :}
 	;	
 number_type ::= integral_type:i		{: RESULT = i; :}
 	| floating_point_type:i			{: RESULT = i; :}
