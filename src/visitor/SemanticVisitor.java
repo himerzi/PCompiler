@@ -644,7 +644,6 @@ public class SemanticVisitor implements Visitor {
 			}
 		} catch (NullPointerException e1) {
 			// TODO Auto-generated catch block
-			System.out.println("leaf on funcdecl");
 		}
 		try {
 			// visit the block
