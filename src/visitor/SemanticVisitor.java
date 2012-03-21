@@ -446,7 +446,7 @@ public class SemanticVisitor implements Visitor {
 			int i = 0;
 			for(String s: compare){
 				
-				if(!s.equals(tempList.get(i)) && i < tempList.size()){
+				if(i < tempList.size() && !s.equals(tempList.get(i))){
 					System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
 					break;
 				}
@@ -572,11 +572,12 @@ public class SemanticVisitor implements Visitor {
 	public Boolean visit(DeclList e) {
 		// DeclNode l, DeclList r
 		try{
-			e.right.accept(this);
+			e.left.accept(this);
 		}catch (NullPointerException e1) {
 		}
 		try{
-			e.left.accept(this);
+			e.right.accept(this);
+
 		}catch (NullPointerException e1) {
 		}
 		// TODO Auto-generated method stub
@@ -699,7 +700,7 @@ public class SemanticVisitor implements Visitor {
 		int i = 0;
 		for(String s: compare){
 			
-			if(!s.equals(tempList.get(i))){
+			if(i < tempList.size() && !s.equals(tempList.get(i))){
 				System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
 				break;
 			}

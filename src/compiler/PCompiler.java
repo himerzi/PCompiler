@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " glob:str= \"sd\"; fdef sum(i: int, j:int) : int { return glob;}{i:int = sum(3,1)+3;}" ;
+  private static final String input = " glob:str= \"sd\"; fdef sum(i: int, j:int) : int { i:str = glob; return 3;}{i:int = sum(3,1)+3;}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
