@@ -55,7 +55,7 @@ public class PCompiler {
 				return scan;
 			i++; 
 		}
-		return "bombaclot";
+		return "";
 	}
 	
 	public static int getColumn(int yychar){

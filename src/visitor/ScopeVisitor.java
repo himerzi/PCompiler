@@ -2,49 +2,11 @@ package visitor;
 
 import java.util.ArrayList;
 import visitor.SymbolTable.EntryKind;
-import ast.Block;
-import ast.Body;
-import ast.PrimitiveType;
-import ast.Root;
-import ast.Type;
-import ast.declarations.ArgList;
-import ast.declarations.DataTypeDecl;
-import ast.declarations.DeclList;
-import ast.declarations.FuncDecl;
-import ast.declarations.VarDeclComplex;
-import ast.declarations.VarDeclSimple;
-import ast.expressions.AndExpr;
-import ast.expressions.ArrayLiteral;
-import ast.expressions.ConcatExpr;
-import ast.expressions.DivExpr;
-import ast.expressions.EqqExpr;
-import ast.expressions.ExprCSV;
-import ast.expressions.FieldAccess;
-import ast.expressions.FuncExpr;
-import ast.expressions.GreaterEqExpr;
-import ast.expressions.GreaterExpr;
-import ast.expressions.Id;
-import ast.expressions.InExpr;
-import ast.expressions.LessEqExpr;
-import ast.expressions.LessExpr;
-import ast.expressions.Literal;
-import ast.expressions.MinusExpr;
-import ast.expressions.NotEqqExpr;
-import ast.expressions.NotExpr;
-import ast.expressions.NotInExpr;
-import ast.expressions.OrExpr;
-import ast.expressions.PlusExpr;
-import ast.expressions.PowerExpr;
-import ast.expressions.TimesExpr;
-import ast.sequences.List;
-import ast.sequences.Tuple;
-import ast.statements.Assign;
-import ast.statements.FuncStmt;
-import ast.statements.IfStmt;
-import ast.statements.RepeatStmt;
-import ast.statements.ReturnStmt;
-import ast.statements.StmtList;
-import ast.statements.WhileStmt;
+import ast.*;
+import ast.statements.*;
+import ast.expressions.*;
+import ast.declarations.*;
+import ast.sequences.*;
 
 public class ScopeVisitor implements Visitor {
 	SymbolTable table;
@@ -240,7 +202,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if (!(e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
+		if ((e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
@@ -489,7 +451,11 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.els.accept(this);
 		}catch (NullPointerException e1) {
-		}		return null;
+		}
+		if(!e.left.nodeType.equals("bool")){
+			System.out.println("Type error: the condition in an if statement must yield a boolean value, not a " + e.left.nodeType);
+		}
+		return null;
 	}
 
 	@Override
@@ -522,6 +488,9 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
+		if(!e.left.nodeType.equals("bool")){
+			System.out.println("Type error: the condition in a while statement must yield a boolean value, not a " + e.left.nodeType);
+		}
 		return null;
 	}
 
@@ -550,6 +519,9 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
+		}
+		if(!e.right.nodeType.equals("bool")){
+			System.out.println("Type error: the condition in a repeat statement must yield a boolean value, not a " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -584,12 +556,10 @@ public class ScopeVisitor implements Visitor {
 		try{
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
-			System.out.println("i've reached a leaf on declList");
 		}
 		try{
 			e.left.accept(this);
 		}catch (NullPointerException e1) {
-			System.out.println("i've reached a leaf on declList");
 		}
 		// TODO Auto-generated method stub
 		return null;
