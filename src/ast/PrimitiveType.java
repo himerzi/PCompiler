@@ -8,5 +8,5 @@ package ast;
  *
  */
 public enum PrimitiveType {
-	BOOL, INT, CHAR, STRING, FLOAT, LIST, TUPLE
+	BOOL, INT, CHAR, STR, FLOAT, LIST, TUPLE
 }

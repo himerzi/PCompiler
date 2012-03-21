@@ -446,7 +446,7 @@ public class SemanticVisitor implements Visitor {
 			int i = 0;
 			for(String s: compare){
 				
-				if(!s.equals(tempList.get(i))){
+				if(!s.equals(tempList.get(i)) && i < tempList.size()){
 					System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
 					break;
 				}
