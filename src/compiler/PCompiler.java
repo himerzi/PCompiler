@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " {q:int=[12,3,4];}" ;
+  private static final String input = " {a:list = [1,2,3,45.6];}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
@@ -55,7 +55,7 @@ public class PCompiler {
 				return scan;
 			i++; 
 		}
-		return "bombaclot";
+		return "";
 	}
 	
 	public static int getColumn(int yychar){
