@@ -1,0 +1,6 @@
+/* This test files tests that the General rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+/* This test file shows that the delaration part of optional and that the main body part is compulsory although it can be empty */
+
+{
+  
+}

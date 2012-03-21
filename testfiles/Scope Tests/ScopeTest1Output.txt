@@ -1,0 +1,45 @@
+/* This test file tests all of the scope rules */
+
+declaredGlobally:str="La Divina Commedia";
+
+/* Scope Rule 3 */
+fdef scopeChecker(scopeInFunction:str):str {   
+     declaredGlobally = "Can be accessed here since it is globally declared";
+     scopeInFunction = "Can be accessed here since its scope is in this function";   /* Scope Rule 4  */
+     return "Doughnut";
+}
+
+{
+  
+  declaredGlobally:str = "Cannot be declared since it has alraedy been declared";    /* Scope Rule 5  */
+  declaredGlobally = "This variable can be accessed in this scope because it was declared in the declaration part of the program";  /* Scope Rule 1 */ 
+  scopeInFunction = "Cannot be accessed here since the scope is within the scopeChecker function";   /* Scope Rule 4  */   
+  while (1 == 1) do {
+     whileStatementScope:str = "This variable scope is only within the while loop";
+  } 
+  whileStatementScope = "This will generate an error because this variable is not in scope";  /* Scope Rule 1  */
+  
+}
+
+
+OUTPUT:
+----------------- P Parser Syntax Analysis Error List  ------------------
+
+ - No syntax errors found.
+
+ - No lexical errors found.
+
+
+----------------- P Parser Syntax Analysis Short Summary -----------------
+
+ Parsing completed successfully with:
+     0 syntax errors,
+     0 lexical errors.
+
+---------------- P Parser Semantic Analysis Short Summary ----------------
+
+ - Scope error: scopeChecker has not been declared, or is not in scope.
+ - Scope Error: declaredGlobally has already been declared.
+ - Scope error: scopeInFunction has not been declared, or is not in scope.
+ - Scope error: whileStatementScope has not been declared, or is not in scope.
+--------------------------------------------------------------------------

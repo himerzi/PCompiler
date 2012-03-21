@@ -1,0 +1,13 @@
+/* This test files tests that the Assignment rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+
+s1:str = "This is a string";
+i1:int = 4;
+f1:float = 4.2;
+c1:char = 'C';
+b1:bool = true;
+
+{  
+    s1 = 45;    /* Semantic Rule 3: Assignments are legal only if the identifier on the left-hand side and the expression on the right-hand side have the same type. */
+    i1 = 7.3;   /* Semantic Rule 4: It is not possible to assign an int to a float or assign a float to an int. */
+    f1 = 5;     /* Semantic Rule 4: It is not possible to assign an int to a float or assign a float to an int. */
+}

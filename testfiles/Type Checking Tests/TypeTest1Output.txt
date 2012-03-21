@@ -1,0 +1,24 @@
+/* This test files tests that the General rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+/* This test file shows that the delaration part of optional and that the main body part is compulsory although it can be empty */
+
+{
+  
+}
+
+OUTPUT:
+------------------ P Parser Syntax Analysis Error List  ------------------
+
+ - No syntax errors found.
+
+ - No lexical errors found.
+
+
+----------------- P Parser Syntax Analysis Short Summary -----------------
+
+ Parsing completed successfully with:
+     0 syntax errors,
+     0 lexical errors.
+
+---------------- P Parser Semantic Analysis Short Summary ----------------
+
+--------------------------------------------------------------------------

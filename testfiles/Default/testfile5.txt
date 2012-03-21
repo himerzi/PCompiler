@@ -1,0 +1,25 @@
+
+s1:str="La Divina Commedia";
+s2:str="I Promessi Sposi";
+s3:str="I Malavoglia";
+
+
+{
+  key:str="si";  
+  poems:list=[s1,s2,s3];
+
+
+  found : bool = false;
+  i : int =0;
+
+  while (i<len(poems)) do {
+     tmp : str = poems[i];
+     if (key in tmp) { found = true; }
+     else {}
+     i = i+1;
+  }
+
+
+
+
+}

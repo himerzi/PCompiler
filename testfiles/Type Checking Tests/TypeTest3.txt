@@ -1,0 +1,15 @@
+/* This test files tests that the Assignment rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+
+s1:str = "This is a string.";
+i1:int = 4 + 3;               /* Semantic Rule 5, 6 */
+f1:float = 4.2 + 3.141592;    /* Semantic Rule 5, 6 */
+c1:str = 'C' + "";
+b1:bool = true;
+
+{
+    
+    i2:int = 22 / 2;    /* Semantic Rule 8 - This will result in an error because the division yields a float and we are trying to assign it to an int. */
+    f2:float = 22 / 2;  /* Semantic Rule 8 - This is now fine. */
+    f1 = 5 ^ 2.4;       /* Semantic Rule 7 - This will result in an error. */
+    f1 = 5.2 ^ 2;       /* Semantic Rule 7 - This will result in an error. */
+}

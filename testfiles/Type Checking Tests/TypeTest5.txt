@@ -1,0 +1,34 @@
+/* This test files tests that the control flow rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+
+{
+    b1:bool = (5 == 3) || true;
+    if(b1){
+        /* Semantic Rule 12: This if statemtent is fine since it has a boolean expression as its condition.  */
+    } else {
+      
+    }
+    
+    if("O no who put this here"){
+        /* Semantic Rule 12: This if statemtent is incorrect.  */
+    } else {
+      
+    }
+    
+    while(5 != 5)
+    do {
+        /* Semantic Rule 12: This while statemtent is fine since it has a boolean expression as its condition.  */
+    }
+    
+    while("Only a rookie will put this here")
+    do {
+        /* Semantic Rule 12: This while statemtent is also naughty.  */
+    }
+    
+    repeat{
+        /* Semantic Rule 12: This repeat statemtent is fine since it has a boolean expression as its condition.  */
+    } until (false);
+    
+    repeat{
+        /* Semantic Rule 12: This repeat statemtent is fine since it has a boolean expression as its condition.  */
+    } until (56.2 + 89.8752345678987654);
+}

@@ -1,0 +1,17 @@
+fdef functionALITY():void {
+     
+}
+
+/*  Semantic Rule 13.1 (non existent but stil) - This function has already been defined. So excpect an error. */
+fdef functionALITY():void {
+     
+}
+
+/*  Semantic Rule 13 - Overloading not allowed. */
+fdef functionALITY(s2:str):int {
+     return 43.2;   /*  Semantic Rule 16 - This will print an error since the function should return an int expression. */
+}
+
+{
+
+}

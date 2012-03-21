@@ -1,0 +1,14 @@
+/* This test files tests that the Assignment rules (as listed in the "The P Language Scope and Semantic Rules" document) are implemented correctly. */
+
+s1:str = "This is a string";
+s2:str = "Meh meh bang noo";
+i1:int = 4 + 3;
+f1:float = 4.2 + 3.141592;
+c1:str = 'C' + "";
+b1:bool = true;
+
+{
+    b1:bool = s1 < s2;          /* Semantic Rule 9 - This will result in an error since our language does not allow anythin other than int and float to be compared using <, <=, >, >= */
+    b1:bool = 3 < 4;            /* Semantic Rule 9 - Voila. */
+    b1:bool = (true == false);  /* Semantic Rule 10 */
+}
