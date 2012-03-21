@@ -3,7 +3,7 @@ package compiler;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
-import visitor.SemanticVisitor;
+import visitor.ScopeVisitor;
 import visitor.SymbolTable;
 
 import ast.Root;
@@ -13,7 +13,11 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " fdef sum(i: int, j:int) : int { return 3;}{i:int = sum(2,1,1)+3;}" ;
+<<<<<<< HEAD
+  private static final String input = " fdef sum(i: int, j:int) : int { return true;}{}" ;
+=======
+  private static final String input = " {a:list = [1,2,3,45.6];}" ;
+>>>>>>> c3476c4aabc6f958eb55d5b835160bbad78b2dff
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));
@@ -22,8 +26,9 @@ public class PCompiler {
 	try{
 		Symbol result= myParser.parse();
 		Root root = (Root)result.value;
-		SemanticVisitor sv = new SemanticVisitor();
-		root.accept(sv);
+		ScopeVisitor sv = new ScopeVisitor();
+		SymbolTable totalTable = (SymbolTable)root.accept(sv);
+		System.out.println(totalTable.toString());
 	} catch(Exception e){
 		e.printStackTrace();
 		System.out.println("\n - Error in processing P File.");

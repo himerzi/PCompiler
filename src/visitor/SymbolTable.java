@@ -44,6 +44,10 @@ public class SymbolTable {
 	public Boolean lookup(String key){
 		return search(key) == null?false:true;
 	}
+	public int numOfArgs(String key){
+		Row ans = search(key);
+		return ans.type.size()-1;
+	}
 	private Row search(String key){
 		SymbolTable t = this;
 		Row ans = t.table.get(key);

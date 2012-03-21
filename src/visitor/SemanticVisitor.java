@@ -9,10 +9,10 @@ import ast.expressions.*;
 import ast.declarations.*;
 import ast.sequences.*;
 
-public class ScopeVisitor implements Visitor {
+public class SemanticVisitor implements Visitor {
 	
 	SymbolTable table;
-	public ScopeVisitor(){
+	public SemanticVisitor(){
 		table = new SymbolTable();
 		System.out.println("\n---------------- P Parser Semantic Analysis Short Summary ----------------\n");
 	}
@@ -437,6 +437,11 @@ public class ScopeVisitor implements Visitor {
 		String funcId = ((Id)e.left).id;
 		if(lookup(funcId)){
 			e.nodeType = table.getType(funcId);
+			ArrayList<VarDeclSimple>tempList = new ArrayList<VarDeclSimple>();
+			int numArgs = (Integer)e.right.accept(this);
+			if(table.numOfArgs(funcId) != numArgs){
+				System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+			}
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -675,6 +680,10 @@ public class ScopeVisitor implements Visitor {
 	public Object visit(FuncStmt e) {
 		String funcId = ((Id)e.left).id;
 		lookup(funcId);
+		int numArgs = (Integer)e.right.accept(this);
+		if(table.numOfArgs(funcId) != numArgs){
+			System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+		}
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -705,16 +714,18 @@ public class ScopeVisitor implements Visitor {
 		return null;
 	}
 	@Override
-	public Object visit(ExprCSV e) {
+	public Integer visit(ExprCSV e) {
+		int args = 0;
 		try{
 			e.left.accept(this);
+			args++;
 		}catch (NullPointerException e1) {
 		}
 		try{
-			e.right.accept(this);
+			args += (Integer)e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}		
-		return null;
+		return args;
 	}
 	@Override
 	public Object visit(Literal e) {
