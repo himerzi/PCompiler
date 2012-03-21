@@ -13,7 +13,7 @@ import java_cup.runtime.Symbol;
 public class PCompiler {
 
   //private static final String input = getInputStream();
-  private static final String input = " {q:i[12,3,4];}" ;
+  private static final String input = " {q:int=[12,3,4];}" ;
 
   public static void main(String args[]){
   	Yylex myScanner = new Yylex(new ByteArrayInputStream( input.getBytes() ));

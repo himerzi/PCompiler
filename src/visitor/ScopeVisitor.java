@@ -238,9 +238,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if (((e.left.nodeType.equals("int") || e.left.nodeType.equals("bool")||e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")||e.right.nodeType.equals("bool")
-				))
-				&& e.left.nodeType.equals(e.right.nodeType)){
+		if (!(e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
@@ -259,7 +257,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
+		if(!(e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";
@@ -311,8 +309,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
-				&& e.left.nodeType.equals(e.right.nodeType)){
+		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
@@ -329,8 +326,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
-				&& e.left.nodeType.equals(e.right.nodeType)){
+		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
@@ -347,8 +343,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
-				&& e.left.nodeType.equals(e.right.nodeType)){
+		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
@@ -366,8 +361,7 @@ public class ScopeVisitor implements Visitor {
 			e.right.accept(this);
 		}catch (NullPointerException e1) {
 		}
-		if(((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float")))
-				&& e.left.nodeType.equals(e.right.nodeType)){
+		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
 			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
@@ -684,6 +678,7 @@ public class ScopeVisitor implements Visitor {
 			e.left.accept(this);
 		} catch (NullPointerException e1) {
 		}
+		e.nodeType="list";
 		return null;
 	}
 	@Override
@@ -692,6 +687,8 @@ public class ScopeVisitor implements Visitor {
 			e.left.accept(this);
 		} catch (NullPointerException e1) {
 		}
+		e.nodeType="list";
+
 		return null;
 	}
 	@Override
