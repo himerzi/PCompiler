@@ -103,7 +103,7 @@ public class SemanticVisitor implements Visitor {
 		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
 			e.nodeType = "float";
 		}else{
-			System.out.println("Type error: cannot sum " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot sum " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		return null;
 	}
@@ -124,7 +124,7 @@ public class SemanticVisitor implements Visitor {
 		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
 			e.nodeType = "float";
 		}else{
-			System.out.println("Type error: cannot multiply " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot multiply " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -146,7 +146,7 @@ public class SemanticVisitor implements Visitor {
 		}else if(e.left.nodeType.equals("float") && e.right.nodeType.equals("float")){
 			e.nodeType = "float";
 		}else{
-			System.out.println("Type error: cannot subtract " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot subtract " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -166,7 +166,7 @@ public class SemanticVisitor implements Visitor {
 		if ((e.left.nodeType.equals("int") || e.left.nodeType.equals("float"))&&(e.right.nodeType.equals("int")||e.right.nodeType.equals("float"))){
 			e.nodeType = "float";
 		}else{
-			System.out.println("Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
 			//set to prevent a cascade of errors
 			e.nodeType = "float";
 		}
@@ -184,11 +184,11 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if (!e.right.nodeType.equals("int")){
-			System.out.println("Type error: cannot raise to a non-integer power" );
+			System.out.println(" - Type error: cannot raise to a non-integer power" );
 		}else if(!e.left.nodeType.equals("int")||e.left.nodeType.equals("float")){
-			System.out.println("Type error: cannot apply power to a " + e.left.nodeType );
+			System.out.println(" - Type error: cannot apply power to a " + e.left.nodeType );
 		}else{
-			System.out.println("Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot divide " + e.left.nodeType + " and " + e.right.nodeType );
 			//set to prevent a cascade of errors
 			e.nodeType = "float";
 		}
@@ -208,7 +208,7 @@ public class SemanticVisitor implements Visitor {
 		if ((e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType );
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -225,7 +225,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")||e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";
 
@@ -243,7 +243,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";
 		return null;
@@ -260,7 +260,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!(e.left.nodeType.equals("bool")&&e.right.nodeType.equals("bool"))){
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		e.nodeType = "bool";		
 		return null;
@@ -279,7 +279,7 @@ public class SemanticVisitor implements Visitor {
 		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}		return null;
 	}
 
@@ -296,7 +296,7 @@ public class SemanticVisitor implements Visitor {
 		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}		return null;
 	}
 
@@ -313,7 +313,7 @@ public class SemanticVisitor implements Visitor {
 		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -331,7 +331,7 @@ public class SemanticVisitor implements Visitor {
 		if((e.left.nodeType.equals("int")||e.left.nodeType.equals("float"))&&(e.left.nodeType.equals(e.right.nodeType))){
 			e.nodeType = "bool";
 		}else{
-			System.out.println("Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
+			System.out.println(" - Type error: cannot compare " + e.left.nodeType + " and " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -372,7 +372,7 @@ public class SemanticVisitor implements Visitor {
 		}
 		//list, str, tuple
 		if(!e.left.nodeType.equals("str")){
-			System.out.println("Type error: in cannot operate on " + e.left.nodeType);
+			System.out.println(" - Type error: in cannot operate on " + e.left.nodeType);
 		}
 		//prevent cascade
 		e.nodeType = "bool";
@@ -391,7 +391,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}		
 		if(!e.left.nodeType.equals("str")){
-			System.out.println("Type error: in cannot operate on " + e.left.nodeType);
+			System.out.println(" - Type error: in cannot operate on " + e.left.nodeType);
 		}
 		//prevent cascade
 		e.nodeType = "bool";
@@ -409,9 +409,9 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}	
 		if(!(e.left.nodeType.equals("str")||e.left.nodeType.equals("list")||e.left.nodeType.equals("tuple"))){
-			System.out.println("Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
+			System.out.println(" - Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
 		}else if(!(e.right.nodeType.equals("str")||e.right.nodeType.equals("list")||e.right.nodeType.equals("tuple"))){
-			System.out.println("Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
+			System.out.println(" - Type error: ::(concatenation) cannot operate on " + e.left.nodeType);
 		}
 		//prevent cascade
 		e.nodeType = "bool";
@@ -426,7 +426,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}		
 		if(!e.left.nodeType.equals("bool")){
-			System.out.println("Type error: cannot apply ! (not) operator to " + e.left.nodeType);
+			System.out.println(" - Type error: cannot apply ! (not) operator to " + e.left.nodeType);
 		}
 		e.nodeType = "bool";
 		return null;
@@ -440,14 +440,14 @@ public class SemanticVisitor implements Visitor {
 			ArrayList<String> tempList = ((ArrayList<String>)e.right.accept(this));
 			int numArgs = tempList.size();
 			if(table.numOfArgs(funcId) != numArgs){
-				System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+				System.out.println(" - Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
 			}
 			ArrayList<String>compare = table.getArgTypes(funcId);
 			int i = 0;
 			for(String s: compare){
 				
 				if(i < tempList.size() && !s.equals(tempList.get(i))){
-					System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
+					System.out.println(" - Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
 					break;
 				}
 				i++;
@@ -471,7 +471,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!e.left.nodeType.equals("bool")){
-			System.out.println("Type error: the condition in an if statement must yield a boolean value, not a " + e.left.nodeType);
+			System.out.println(" - Type error: the condition in an if statement must yield a boolean value, not a " + e.left.nodeType);
 		}
 		return null;
 	}
@@ -489,7 +489,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!e.left.nodeType.equals(e.right.nodeType)){
-			System.out.println("Type error: Cannot assign a " + e.right.nodeType + " to a " + e.left.nodeType);
+			System.out.println(" - Type error: Cannot assign a " + e.right.nodeType + " to a " + e.left.nodeType);
 		}
 		e.nodeType = e.right.nodeType;
 		return null;
@@ -507,7 +507,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!e.left.nodeType.equals("bool")){
-			System.out.println("Type error: the condition in a while statement must yield a boolean value, not a " + e.left.nodeType);
+			System.out.println(" - Type error: the condition in a while statement must yield a boolean value, not a " + e.left.nodeType);
 		}
 		return null;
 	}
