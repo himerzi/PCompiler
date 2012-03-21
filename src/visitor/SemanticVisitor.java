@@ -539,7 +539,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!e.right.nodeType.equals("bool")){
-			System.out.println("Type error: the condition in a repeat statement must yield a boolean value, not a " + e.right.nodeType);
+			System.out.println(" - Type error: the condition in a repeat statement must yield a boolean value, not a " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -615,7 +615,7 @@ public class SemanticVisitor implements Visitor {
 		}catch (NullPointerException e1) {
 		}
 		if(!e.left.nodeType.equals(e.right.nodeType)){
-			System.out.println("Type error: cannot instantiate a " + e.left.nodeType + " to a " + e.right.nodeType);
+			System.out.println(" - Type error: cannot instantiate a " + e.left.nodeType + " to a " + e.right.nodeType);
 		}
 		return null;
 	}
@@ -653,7 +653,7 @@ public class SemanticVisitor implements Visitor {
 		}
 		table = table.endScope();
 		if(!(returnType.equals(table.getType(e.id.id)))){
-			System.out.println("Type error: function " + e.id.id + " does not return its declared type");
+			System.out.println(" - Type error: function " + e.id.id + " does not return its declared type");
 		}
 		return true;
 	}
@@ -694,14 +694,14 @@ public class SemanticVisitor implements Visitor {
 		ArrayList<String> tempList = ((ArrayList<String>)e.right.accept(this));
 		int numArgs = tempList.size();
 		if(table.numOfArgs(funcId) != numArgs){
-			System.out.println("Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
+			System.out.println(" - Semantic error: incorect number of arguments " + numArgs + " for " + table.numOfArgs(funcId));
 		}
 		ArrayList<String>compare = table.getArgTypes(funcId);
 		int i = 0;
 		for(String s: compare){
 			
 			if(i < tempList.size() && !s.equals(tempList.get(i))){
-				System.out.println("Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
+				System.out.println(" - Semantic error: incorect arguments for function" + funcId + ", " + tempList.get(i) + " for " + s);
 				break;
 			}
 			i++;
@@ -712,7 +712,7 @@ public class SemanticVisitor implements Visitor {
 	private boolean lookup(String key){
 
 		if(!table.lookup(key)){
-			System.out.println("Scope error: "+key + " has not been declared, or is not in scope.");
+			System.out.println(" - Scope error: "+key + " has not been declared, or is not in scope.");
 			return false;
 		}
 		return true;

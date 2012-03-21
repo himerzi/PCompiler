@@ -19,7 +19,7 @@ public class SymbolTable {
 		}
 	public void put(String key, String i, EntryKind k, ArrayList<VarDeclSimple> t){
 		if(table.containsKey(key)){
-			System.out.println("Scope Error: "+key+" has already been decalred.");
+			System.out.println(" - Scope Error: "+key+" has already been decalred.");
 		}else{
 			table.put(key, new Row(i, k, t));
 		}
